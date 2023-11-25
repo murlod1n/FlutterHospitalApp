@@ -40,8 +40,6 @@ dependencies:
   dio: ^5.3.4
   logger: ^1.3.0
 
-  fluttertoast: ^8.2.2
-
 
   flutter_riverpod: ^2.4.8
 
@@ -49,10 +47,16 @@ dependencies:
 
 
   #bloc
+  bloc: ^8.0.0
   flutter_bloc: ^8.1.3
+
+  auto_route: ^7.8.4
+
+  equatable: ^2.0.5
 
   #DI
   get_it: ^7.6.4
+
 
   #JSON annotation
   json_annotation: ^4.8.1
@@ -68,6 +72,7 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
   build_runner: ^2.4.6
+  auto_route_generator: ^7.3.2
 
   #JSON serialization
   json_serializable: ^6.7.1

@@ -1,6 +1,6 @@
-import "../../domain/model/doctor.dart";
+import '../../domain/model/doctor.dart';
 import "../../domain/repository/doctor_repository.dart";
-import "../api/services/api_service.dart";
+import '../api/services/api_service.dart';
 
 class DoctorRepositoryImpl implements DoctorRepository {
   DoctorRepositoryImpl(this.apiService);

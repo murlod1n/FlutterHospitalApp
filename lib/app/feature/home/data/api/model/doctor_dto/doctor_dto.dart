@@ -1,6 +1,6 @@
 import "package:json_annotation/json_annotation.dart";
 
-part "doctor_dto.g.dart";
+part 'doctor_dto.g.dart';
 
 @JsonSerializable()
 class DoctorDto {
