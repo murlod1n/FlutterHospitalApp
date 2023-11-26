@@ -1,6 +1,6 @@
 import "package:freezed_annotation/freezed_annotation.dart";
 
-part 'service_dto.g.dart';
+part "service_dto.g.dart";
 
 @JsonSerializable()
 class ServiceDto {

@@ -1,4 +1,6 @@
-class DoctorUI {
+import "package:equatable/equatable.dart";
+
+class DoctorUI extends Equatable {
   DoctorUI({
     required this.kod,
     required this.name,
@@ -16,5 +18,8 @@ class DoctorUI {
   String img;
   String active;
   String del;
+
+  @override
+  List<Object?> get props => [kod, name, filial,dolzhnost,img,active,del];
 
 }

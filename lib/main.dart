@@ -1,4 +1,10 @@
 import "package:flutter/material.dart";
+import "package:flutter_bloc/flutter_bloc.dart";
+import "app/feature/home/domain/usecase/get_doctor_list_usecase.dart";
+import "app/feature/home/domain/usecase/get_service_list_usecase.dart";
+import "app/feature/home/presentation/bloc/doctor_bloc/doctor_bloc.dart";
+import "app/feature/home/presentation/bloc/record_bloc/record_bloc.dart";
+import "app/feature/home/presentation/bloc/service_bloc/service_bloc.dart";
 import "app/routing/app_router.dart";
 import "app/service_locator/locator_config.dart";
 
@@ -12,14 +18,24 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      routerConfig: locator<AppRouter>().config()
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<DoctorBloc>(
+            create: (BuildContext context) => DoctorBloc(
+                getDoctorListUseCase: locator<GetDoctorListUseCase>())
+              ..add(GetDoctorList())),
+        BlocProvider<ServiceBloc>(
+            create: (BuildContext context) => ServiceBloc(
+                getServiceListUseCase: locator<GetServiceListUseCase>())),
+        BlocProvider<RecordBloc>(create: (BuildContext context) => RecordBloc())
+      ],
+      child: MaterialApp.router(
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            useMaterial3: true,
+          ),
+          routerConfig: router),
     );
   }
-
 }

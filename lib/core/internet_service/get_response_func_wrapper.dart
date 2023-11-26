@@ -1,4 +1,7 @@
+import "dart:convert";
+
 import "package:dio/dio.dart";
+import "package:flutter/material.dart";
 import "server_exception.dart";
 
 Future<List<D>> getResponseFuncWrapper<D, T>({
@@ -10,6 +13,7 @@ Future<List<D>> getResponseFuncWrapper<D, T>({
   try {
     final Response<dynamic> response = await request();
     if (response.statusCode == 200) {
+      debugPrint(response.data.toString());
       final List<D> data = (response.data[dataKey] as List).map((
           dynamic elt) =>
           toD(fromJson(elt as Map<String, dynamic>))).toList();
