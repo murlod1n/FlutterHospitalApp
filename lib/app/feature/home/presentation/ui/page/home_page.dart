@@ -8,7 +8,8 @@ import "../../../domain/usecase/get_service_list_usecase.dart";
 import "../../bloc/doctor_bloc/doctor_bloc.dart";
 import "../../bloc/record_bloc/record_bloc.dart";
 import "../../bloc/service_bloc/service_bloc.dart";
-import "../component/doctor_list_section.dart";
+import "../component/select_date_section.dart";
+import "../component/select_doctor_section.dart";
 import "../component/selected_services_section.dart";
 import "../component/step_indicator.dart";
 
@@ -37,10 +38,10 @@ class _HomePageState extends State<HomePage> {
               children: <Widget>[
                 Container(padding: EdgeInsets.only(top: 20, left: 16, right: 16, bottom: 0),child: StepIndicator(step: state.step)),
                 state.step == 0
-                    ? DoctorListSection()
+                    ? SelectDoctorSection()
                     : state.step == 1
                         ? SelectedServicesSection()
-                        : SizedBox()
+                        : SelectDateSection()
               ],
             );
           },

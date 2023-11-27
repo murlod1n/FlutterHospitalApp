@@ -15,6 +15,8 @@ class DoctorDto {
   });
 
   factory DoctorDto.fromJson(Map<String, dynamic> json) => _$DoctorDtoFromJson(json);
+  Map<String, dynamic> toJson() => _$DoctorDtoToJson(this);
+
 
   @JsonKey(name: "Kod") String kod;
   @JsonKey(name: "Name") String name;

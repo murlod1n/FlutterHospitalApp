@@ -1,3 +1,5 @@
+import "dart:convert";
+
 import "package:freezed_annotation/freezed_annotation.dart";
 import "../doctor_dto/doctor_dto.dart";
 
@@ -8,15 +10,17 @@ class RecordDto {
 
   RecordDto({
    required this.doctor,
-    required this.service,
+    required this.services,
     required this.date,
     required this.time
 });
 
   factory RecordDto.fromJson(Map<String, dynamic> json) => _$RecordDtoFromJson(json);
 
+  Map<String, dynamic> toJson() => _$RecordDtoToJson(this);
+
   DoctorDto doctor;
-  String service;
+  List<String> services;
   String date;
   String time;
 

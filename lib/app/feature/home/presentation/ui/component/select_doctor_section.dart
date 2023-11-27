@@ -8,8 +8,8 @@ import "../../bloc/record_bloc/record_bloc.dart";
 import "../../model/doctor_ui.dart";
 import "doctor_card.dart";
 
-class DoctorListSection extends StatelessWidget {
-  const DoctorListSection({super.key});
+class SelectDoctorSection extends StatelessWidget {
+  const SelectDoctorSection({super.key});
 
   @override
   Widget build(BuildContext context) {
