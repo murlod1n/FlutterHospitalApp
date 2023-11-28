@@ -9,7 +9,7 @@ part of 'record_dto.dart';
 RecordDto _$RecordDtoFromJson(Map<String, dynamic> json) => RecordDto(
       doctor: DoctorDto.fromJson(json['doctor'] as Map<String, dynamic>),
       services:
-          (jsonDecode(json['services'] as String) as List).map((dynamic e) => e as String).toList(),
+      (jsonDecode(json['services'] as String) as List).map((dynamic e) => e as String).toList(),
       date: json['date'] as String,
       time: json['time'] as String,
     );

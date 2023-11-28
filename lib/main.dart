@@ -6,6 +6,7 @@ import "app/feature/home/domain/usecase/post_record_usecase.dart";
 import "app/feature/home/presentation/bloc/doctor_bloc/doctor_bloc.dart";
 import "app/feature/home/presentation/bloc/record_bloc/record_bloc.dart";
 import "app/feature/home/presentation/bloc/service_bloc/service_bloc.dart";
+import "app/feature/shared/data/storage/dao/database_dao.dart";
 import "app/routing/app_router.dart";
 import "app/service_locator/locator_config.dart";
 
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
         BlocProvider<ServiceBloc>(
             create: (BuildContext context) => ServiceBloc(
                 getServiceListUseCase: locator<GetServiceListUseCase>())),
-        BlocProvider<RecordBloc>(create: (BuildContext context) => RecordBloc(postRecordUseCase: locator<PostRecordUseCase>()))
+        BlocProvider<RecordBloc>(create: (BuildContext context) => RecordBloc(postRecordUseCase: locator<PostRecordUseCase>(), databaseDao: locator<DatabaseDao>()))
       ],
       child: MaterialApp.router(
           title: 'Flutter Demo',

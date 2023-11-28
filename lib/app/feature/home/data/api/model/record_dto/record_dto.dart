@@ -19,9 +19,9 @@ class RecordDto {
 
   Map<String, dynamic> toJson() => _$RecordDtoToJson(this);
 
-  DoctorDto doctor;
-  List<String> services;
-  String date;
-  String time;
+  final DoctorDto doctor;
+  final List<String> services;
+  final String date;
+  final String time;
 
 }

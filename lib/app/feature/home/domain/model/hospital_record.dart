@@ -8,6 +8,7 @@ class HospitalRecord {
     required this.time
   });
 
+  //todo create final
   Doctor doctor;
   List<String> services;
   String date;
