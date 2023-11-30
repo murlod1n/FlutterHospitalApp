@@ -1,4 +1,4 @@
-part of 'home_bloc.dart';
+part of "home_bloc.dart";
 
 sealed class HomeEvent extends Equatable {}
 
@@ -10,6 +10,15 @@ class SelectDoctor extends HomeEvent {
   @override
   List<Object?> get props => [doctor];
 }
+
+class Reset extends HomeEvent {
+  List<Object?> get props => <Object?>[];
+}
+
+class ReturnToPage extends HomeEvent {
+  List<Object?> get props => <Object?>[];
+}
+
 
 class SelectService extends HomeEvent {
   SelectService({required this.service});

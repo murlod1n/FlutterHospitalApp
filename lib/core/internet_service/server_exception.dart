@@ -7,23 +7,19 @@ class ServerException implements Exception {
       case DioExceptionType.badResponse:
         errorMessage = _handleStatusCode(dioException.response?.statusCode);
       case DioExceptionType.connectionTimeout:
-        errorMessage = "Connection timed out.";
+        errorMessage = "Время соединения истекло";
       case DioExceptionType.sendTimeout:
-        errorMessage = "Request send timeout.";
+        errorMessage = "Время отправки запроса истекло";
       case DioExceptionType.badCertificate:
-        errorMessage = "Incorrect certificate.";
+        errorMessage = "Неверный сертификат";
       case DioExceptionType.cancel:
-        errorMessage = "Request to the server was cancelled.";
-      case DioExceptionType.connectionError:
-        errorMessage = "Connection error.";
+        errorMessage = "Запрос к серверу был отменен";
       case DioExceptionType.unknown:
-        if (dioException.message!.contains("SocketException")) {
-          errorMessage = "No Internet.";
-          break;
-        }
-        errorMessage = "Unexpected error occurred.";
+        errorMessage = "Произошла непредвиденная ошибка";
+      case DioExceptionType.connectionError:
+        errorMessage = "Ошибка соединения";
       case DioExceptionType.receiveTimeout:
-        errorMessage = "Receiving timeout occurred.";
+        errorMessage = "Время приема истекло";
     }
   }
 
@@ -32,27 +28,27 @@ class ServerException implements Exception {
   String _handleStatusCode(int? statusCode) {
     switch (statusCode) {
       case 400:
-        return "Bad request.";
+        return "Плохой запрос";
       case 401:
-        return "Authentication failure";
+        return "Сбой аутентификации";
       case 403:
-        return "User is not authorized to access API";
+        return "Пользователь не авторизован для доступа к API";
       case 404:
-        return "Request resource does not exist";
+        return "Запрашиваемый ресурс не существует";
       case 405:
-        return "Operation not allowed";
+        return "Операция не разрешена";
       case 415:
-        return "Media type unsupported";
+        return "Тип носителя не поддерживается";
       case 422:
-        return "validation data failure";
+        return "Сбой проверки данных";
       case 429:
-        return "too much requests";
+        return "Слишком много запросов";
       case 500:
         return "Internal server error";
       case 503:
-        return "Service unavailable";
+        return "Внутренняя ошибка сервера";
       default:
-        return "Oops something went wrong!";
+        return "Произошла непредвиденная ошибка";
     }
   }
 

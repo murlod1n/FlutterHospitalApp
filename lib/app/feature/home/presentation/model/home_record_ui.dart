@@ -1,4 +1,3 @@
-
 import "../../../shared/presentation/model/doctor_ui.dart";
 
 class HomeRecordUI {
@@ -9,9 +8,8 @@ class HomeRecordUI {
     required this.time
   });
 
-  //todo create final
-  DoctorUI doctor;
-  List<String> services;
-  String date;
-  String time;
+  final DoctorUI doctor;
+  final List<String> services;
+  final String date;
+  final String time;
 }

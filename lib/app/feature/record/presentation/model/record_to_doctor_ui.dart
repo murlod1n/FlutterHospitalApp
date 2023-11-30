@@ -3,13 +3,14 @@ import "../../../shared/presentation/model/service_ui.dart";
 
 class RecordToDoctorUI {
   RecordToDoctorUI({
+    required this.id,
     required this.doctor,
     required this.services,
     required this.date,
   });
 
-  //todo create final
-  DoctorUI doctor;
-  List<ServiceUI> services;
-  String date;
+  final int id;
+  final DoctorUI doctor;
+  final List<ServiceUI> services;
+  final String date;
 }

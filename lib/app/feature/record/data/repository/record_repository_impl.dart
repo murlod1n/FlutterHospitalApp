@@ -3,7 +3,7 @@ import "../../../shared/domain/entity/record_entity.dart";
 import "../../domain/repository/record_repository.dart";
 
 class RecordRepositoryImpl implements RecordRepository {
-  const RecordRepositoryImpl({required this.databaseDao});
+  const RecordRepositoryImpl({ required this.databaseDao });
 
   final DatabaseDao databaseDao;
 

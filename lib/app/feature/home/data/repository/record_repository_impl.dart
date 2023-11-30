@@ -7,7 +7,7 @@ import "../mapper/dto_mapper.dart";
 
 
 class RecordRepositoryImpl implements RecordRepository {
-  const RecordRepositoryImpl({required this.apiService, required this.databaseDao});
+  const RecordRepositoryImpl({ required this.apiService, required this.databaseDao });
 
   final ApiService apiService;
   final DatabaseDao databaseDao;

@@ -9,12 +9,17 @@ import "../table/doctors.dart";
 import "../table/hospital_services.dart";
 import "../table/records.dart";
 
-part 'database_dao.g.dart';
+part "database_dao.g.dart";
 
-@DriftAccessor(tables: [Records, HospitalServices, Doctors])
+@DriftAccessor(tables: <Type>[Records, HospitalServices, Doctors])
 class DatabaseDao extends DatabaseAccessor<Database> with _$DatabaseDaoMixin {
   DatabaseDao(super.db);
 
+  void getTest() {
+    debugPrint("select");
+    debugPrint(select(records).get().toString());
+
+  }
 
   Future<void> insertRecord(RecordEntity entry) {
     debugPrint("insertRecords");
@@ -33,93 +38,79 @@ class DatabaseDao extends DatabaseAccessor<Database> with _$DatabaseDaoMixin {
       ));
       for (final ServiceEntity service in entry.services) {
         final HospitalService addedService = await into(hospitalServices)
-            .insertReturning(HospitalServicesCompanion.insert(
+          .insertReturning(HospitalServicesCompanion.insert(
             kod: service.kod,
             name: service.name,
             active: service.active,
             del: service.del,
             price: service.price));
 
-        await into(records).insert(RecordsCompanion.insert(
+        await into(records).insert(
+          RecordsCompanion.insert(
             date: entry.date,
             doctor: addedDoctor.id,
-            service: addedService.id));
+            service: addedService.id
+          )
+        );
       }
     });
   }
 
-
   Stream<List<RecordEntity>> getAllRecords() {
-    debugPrint("getAllRecords");
-    final recordStream = select(records).watch();
+    final Stream<List<Doctor>> doctorStream = select(doctors).watch();
 
-
-
-    return recordStream.switchMap((List<Record> recordList) {
-      final Map<int, Record> idToRecord = {
-        for(final Record record in recordList) record.id: record
+    return doctorStream.switchMap((List<Doctor> doctorList) {
+      final Map<int, Doctor> idToDoctor = <int, Doctor>{
+        for (final Doctor doctor in doctorList) doctor.id: doctor
       };
+      final Iterable<int> ids = idToDoctor.keys;
 
-      final Iterable<int> recordIds = idToRecord.keys;
-
-      final JoinedSelectStatement<HasResultSet, dynamic> query = select(records)
-          .join(<Join<HasResultSet, dynamic>>[
+      final JoinedSelectStatement<HasResultSet, dynamic> query = select(records).join(<Join<HasResultSet, dynamic>>[
         innerJoin(
             hospitalServices, hospitalServices.id.equalsExp(records.service)),
-        innerJoin(doctors, doctors.id.equalsExp(records.doctor))
-      ]);
+      ])
+        ..where(records.doctor.isIn(ids));
 
       return query.watch().map((List<TypedResult> rows) {
-        final Map<int, List<ServiceEntity>> idToService = <int,
-            List<ServiceEntity>>{};
-        final Map<int, DoctorEntity> idToDoctor = <int, DoctorEntity>{};
+        final Map<int, List<ServiceEntity>> idToService = <int, List<ServiceEntity>>{};
+        final Map<int, String> idToDate = <int,String>{};
+        for (final TypedResult row in rows) {
 
+          final HospitalService hospitalService = row.readTable(hospitalServices);
+          final Record record = row.readTable(records);
 
-        for (final row in rows) {
-          final hospitalService = row.readTable(hospitalServices);
-          final doctor = row.readTable(doctors);
-          final record = row.readTable(records);
-
-          idToDoctor.putIfAbsent(record.id, () =>
-              DoctorEntity(
-                  id: doctor.id,
-                  kod: doctor.kod,
-                  name: doctor.name,
-                  filial: doctor.filial,
-                  dolzhnost: doctor.dolzhnost,
-                  img: doctor.img,
-                  active: doctor.active,
-                  del: doctor.del));
-
-          idToService.putIfAbsent(record.id, () => []).add(
-              ServiceEntity(
-                  id: hospitalService.id,
-                  kod: hospitalService.kod,
-                  name: hospitalService.name,
-                  active: hospitalService.active,
-                  del: hospitalService.del,
-                  price: hospitalService.price)
+          idToDate.putIfAbsent(record.doctor, () => record.date);
+          idToService.putIfAbsent(record.doctor, () => <ServiceEntity>[]).add(
+            ServiceEntity(
+              id: hospitalService.id,
+              kod: hospitalService.kod,
+              name: hospitalService.name,
+              active: hospitalService.active,
+              del: hospitalService.del,
+              price: hospitalService.price
+            )
           );
         }
-          return [
-            for(final int id in recordIds) RecordEntity(
-                id: id,
-                date: idToRecord[id]!.date,
-                doctor: DoctorEntity(
-                    id: idToDoctor[id]!.id,
-                    kod: idToDoctor[id]!.kod,
-                    name: idToDoctor[id]!.name,
-                    filial: idToDoctor[id]!.filial,
-                    dolzhnost: idToDoctor[id]!.dolzhnost,
-                    img: idToDoctor[id]!.img,
-                    active: idToDoctor[id]!.active,
-                    del: idToDoctor[id]!.del),
-                services: idToService[id] ?? [])
-          ];
-        });
+
+        return <RecordEntity>[
+          for(final int id in ids)
+            RecordEntity(
+              id: id,
+              date: idToDate[id]!,
+              doctor: DoctorEntity(
+                id: idToDoctor[id]!.id,
+                kod: idToDoctor[id]!.kod,
+                name: idToDoctor[id]!.name,
+                filial: idToDoctor[id]!.filial,
+                dolzhnost: idToDoctor[id]!.dolzhnost,
+                img: idToDoctor[id]!.img,
+                active: idToDoctor[id]!.active,
+                del: idToDoctor[id]!.del),
+              services: idToService[id] ?? <ServiceEntity>[]
+            )
+        ];
       });
-    }
-
-
+    });
+  }
 
 }

@@ -8,13 +8,13 @@ import "../model/record_to_doctor_ui.dart";
 extension ToDoctorUI on DoctorEntity {
   DoctorUI toDoctorUI() {
     return DoctorUI(
-        kod: kod,
-        name: name,
-        filial: filial,
-        dolzhnost: dolzhnost,
-        img: img,
-        active: active,
-        del: del
+      kod: kod,
+      name: name,
+      filial: filial,
+      dolzhnost: dolzhnost,
+      img: img,
+      active: active,
+      del: del
     );
   }
 }
@@ -22,11 +22,11 @@ extension ToDoctorUI on DoctorEntity {
 extension ToServiceUI on ServiceEntity {
   ServiceUI toServiceUI() {
     return ServiceUI(
-        kod: kod,
-        name: name,
-        active: active,
-        del: del,
-        price: price
+      kod: kod,
+      name: name,
+      active: active,
+      del: del,
+      price: price
     );
   }
 }
@@ -34,9 +34,10 @@ extension ToServiceUI on ServiceEntity {
 extension ToRecordToDoctorUI on RecordEntity {
   RecordToDoctorUI toRecordToDoctorUI() {
     return RecordToDoctorUI(
-        doctor: doctor.toDoctorUI(),
-        services: services.map((e) => e.toServiceUI()).toList(),
-        date: date,
+      id: id,
+      doctor: doctor.toDoctorUI(),
+      services: services.map((ServiceEntity e) => e.toServiceUI()).toList(),
+      date: date,
     );
   }
 }

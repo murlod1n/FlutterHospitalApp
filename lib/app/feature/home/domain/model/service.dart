@@ -9,10 +9,10 @@ class Service {
   });
 
 
-  int kod;
-  String name;
-  String active;
-  String del;
-  String price;
+  final int kod;
+  final String name;
+  final String active;
+  final String del;
+  final String price;
 
 }

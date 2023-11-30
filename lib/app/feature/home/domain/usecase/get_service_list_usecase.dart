@@ -2,7 +2,7 @@ import "../model/service.dart";
 import "../repository/service_repository.dart";
 
 class GetServiceListUseCase {
-  GetServiceListUseCase({required this.serviceRepository});
+  GetServiceListUseCase({ required this.serviceRepository });
 
   final ServiceRepository serviceRepository;
 

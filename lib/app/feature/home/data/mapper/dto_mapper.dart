@@ -8,26 +8,26 @@ import "../api/model/service_dto/service_dto.dart";
 extension ToDoctor on DoctorDto {
   Doctor toDoctor() {
     return Doctor(
-        kod: int.parse(kod),
-        name: name,
-        filial: filial,
-        dolzhnost: dolzhnost,
-        img: img,
-        active: active,
-        del: del);
+      kod: int.parse(kod),
+      name: name,
+      filial: filial,
+      dolzhnost: dolzhnost,
+      img: img,
+      active: active,
+      del: del);
   }
 }
 
 extension ToDoctorDto on Doctor {
   DoctorDto toDoctorDto() {
     return DoctorDto(
-        kod: kod.toString(),
-        name: name,
-        filial: filial,
-        dolzhnost: dolzhnost,
-        img: img,
-        active: active,
-        del: del
+      kod: kod.toString(),
+      name: name,
+      filial: filial,
+      dolzhnost: dolzhnost,
+      img: img,
+      active: active,
+      del: del
     );
   }
 }
@@ -36,11 +36,11 @@ extension ToDoctorDto on Doctor {
 extension ToService on ServiceDto {
   Service toService() {
     return Service(
-        kod: int.parse(kod),
-        name: name,
-        active: active,
-        del: del,
-        price: price
+      kod: int.parse(kod),
+      name: name,
+      active: active,
+      del: del,
+      price: price
     );
   }
 }
@@ -48,10 +48,10 @@ extension ToService on ServiceDto {
 extension ToRecordToDoctor on RecordDto {
   RecordToDoctor toHospitalRecord() {
     return RecordToDoctor(
-        doctor: doctor.toDoctor(),
-        services: services,
-        date: date,
-        time: time
+      doctor: doctor.toDoctor(),
+      services: services,
+      date: date,
+      time: time
     );
   }
 }
@@ -59,11 +59,10 @@ extension ToRecordToDoctor on RecordDto {
 extension ToRecordDto on RecordToDoctor {
   RecordDto toRecordDto() {
     return RecordDto(
-        doctor: doctor.toDoctorDto(),
-        services: services,
-        date: date,
-        time: time
+      doctor: doctor.toDoctorDto(),
+      services: services,
+      date: date,
+      time: time
     );
   }
 }
-

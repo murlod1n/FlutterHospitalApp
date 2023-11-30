@@ -1,49 +1,88 @@
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
+import "package:flutter_svg/flutter_svg.dart";
 import "package:go_router/go_router.dart";
 
-class ScaffoldWithNavBar extends StatelessWidget {
-  /// Constructs an [ScaffoldWithNavBar].
+class _ScaffoldWithNavBar extends State<ScaffoldWithNavBar> {
+  int currentIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomInset: false,   //new line
+      body: widget.navigationShell,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: Container(
+        height: 70,
+        width: 70,
+        child: FloatingActionButton(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(100)),
+            onPressed: () {},
+            child: Icon(Icons.add)),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        padding: EdgeInsets.zero,
+        notchMargin: 10,
+        height: 65,
+        shape: CircularNotchedRectangle(),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [
+            Column(
+              children: [
+                IconButton(onPressed: (){_goBranch(0);}, icon: 0 ==  widget.navigationShell.currentIndex ? SvgPicture.asset("assets/images/active_hospital_icon.svg") : SvgPicture.asset("assets/images/hospital_icon.svg")),
+                Text("Главаная", style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                    height: -.1,
+                    color: 0 ==  widget.navigationShell.currentIndex ? Theme.of(context).primaryColor : Color(0xFF7D8186)
+                ))
+              ],
+            ),
+            Column(
+              children: [
+                IconButton(onPressed: (){_goBranch(0);}, icon: SvgPicture.asset("assets/images/schedule_icon.svg")),
+                Text("Календарь",style: Theme.of(context).textTheme.labelSmall?.copyWith(height: -.1,))
+              ],
+            ),
+            SizedBox(width: 70),
+            Column(
+              children: [
+                IconButton(onPressed: (){_goBranch(1);}, icon: 1 ==  widget.navigationShell.currentIndex ? SvgPicture.asset("assets/images/active_hospital_icon.svg") : SvgPicture.asset("assets/images/hospital_icon.svg")),
+                Text("Записи", style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                    height: -.1,
+                    color: 1 ==  widget.navigationShell.currentIndex ? Theme.of(context).primaryColor : Color(0xFF7D8186)
+                ))
+              ],
+            ),
+            Column(
+              children: [
+                IconButton(onPressed: (){_goBranch(0);}, icon: SvgPicture.asset("assets/images/profile_icon.svg")),
+                Text("Аккаунт", style: Theme.of(context).textTheme.labelSmall?.copyWith(height: -.1,))
+              ],
+            ),
+          ],),
+        ),
+
+      ),
+    );
+  }
+
+  void _goBranch(int index) {
+    widget.navigationShell.goBranch(
+      index,
+      initialLocation: index == widget.navigationShell.currentIndex,
+    );
+  }
+}
+
+class ScaffoldWithNavBar extends StatefulWidget {
   const ScaffoldWithNavBar({
     required this.navigationShell,
     Key? key,
   }) : super(key: key ?? const ValueKey<String>('ScaffoldWithNavBar'));
 
-  /// The navigation shell and container for the branch Navigators.
   final StatefulNavigationShell navigationShell;
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: navigationShell,
-      bottomNavigationBar: BottomNavigationBar(
-        // Here, the items of BottomNavigationBar are hard coded. In a real
-        // world scenario, the items would most likely be generated from the
-        // branches of the shell route, which can be fetched using
-        // `navigationShell.route.branches`.
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Section A'),
-          BottomNavigationBarItem(icon: Icon(Icons.work), label: 'Section B'),
-        ],
-        currentIndex: navigationShell.currentIndex,
-        onTap: (int index) => _onTap(context, index),
-      ),
-    );
-  }
-
-  /// Navigate to the current location of the branch at the provided index when
-  /// tapping an item in the BottomNavigationBar.
-  void _onTap(BuildContext context, int index) {
-    // When navigating to a new branch, it's recommended to use the goBranch
-    // method, as doing so makes sure the last navigation state of the
-    // Navigator for the branch is restored.
-    navigationShell.goBranch(
-      index,
-      // A common pattern when using bottom navigation bars is to support
-      // navigating to the initial location when tapping the item that is
-      // already active. This example demonstrates how to support this behavior,
-      // using the initialLocation parameter of goBranch.
-      initialLocation: index == navigationShell.currentIndex,
-    );
-  }
+  State<StatefulWidget> createState() => _ScaffoldWithNavBar();
 }

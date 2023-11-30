@@ -1,7 +1,6 @@
 import "package:flutter/material.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:flutter_svg/svg.dart";
-import "package:intl/date_symbol_data_local.dart";
 import "package:intl/intl.dart";
 
 import "../../../../../../core/extension/string_extension.dart";
@@ -18,7 +17,10 @@ class _SelectDateSectionState extends State<SelectDateSection> {
   int daysOfMonth = 1;
   int currentMonth = DateTime.now().month;
   String selectedTime = "";
-  int currentDay = 0;
+  int currentDay = DateTime.now().day - 1;
+
+
+
 
   final List<String> times = [
     "10:00",
@@ -51,12 +53,11 @@ class _SelectDateSectionState extends State<SelectDateSection> {
 
   @override
   Widget build(BuildContext context) {
-    initializeDateFormatting("ru_RU");
     return BlocBuilder<HomeBloc, HomeState>(
         builder: (BuildContext context, HomeState state) {
       return Expanded(
-        child: Stack(children: [
-          Column(children: [
+        child: Stack(children: <Widget>[
+          Column(children: <Widget>[
             Container(
                 padding: const EdgeInsets.only(left: 22, right: 22, top: 30),
                 child: Row(
@@ -77,7 +78,7 @@ class _SelectDateSectionState extends State<SelectDateSection> {
                 width: MediaQuery.of(context).size.width,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                  children: <Widget>[
                     SizedBox(
                       height: 25,
                       width: 26,
@@ -85,7 +86,7 @@ class _SelectDateSectionState extends State<SelectDateSection> {
                           style: OutlinedButton.styleFrom(
                             padding: EdgeInsets.zero,
                             side: const BorderSide(
-                                width: 1.0, color: Color(0xFF7D8186)),
+                                color: Color(0xFF7D8186)),
                           ),
                           onPressed: () => setState(() {
                                 if (currentMonth == 1) {
@@ -137,7 +138,7 @@ class _SelectDateSectionState extends State<SelectDateSection> {
             Padding(
               padding: const EdgeInsets.only(left: 22, right: 22, top: 26),
               child: Row(
-                children: [
+                children: <Widget>[
                   Text("Выберите время приема",
                       style: Theme.of(context).textTheme.titleSmall),
                 ],
@@ -152,7 +153,7 @@ class _SelectDateSectionState extends State<SelectDateSection> {
                 crossAxisSpacing: 8,
                 crossAxisCount: 4,
                 childAspectRatio: 1 / .5,
-                children: [
+                children: <Widget>[
                   for (final String time in times)
                     GestureDetector(
                       onTap: () {
@@ -171,7 +172,7 @@ class _SelectDateSectionState extends State<SelectDateSection> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            shadows: const [
+                            shadows: const <BoxShadow>[
                               BoxShadow(
                                 color: Color(0x63D6DBE1),
                                 blurRadius: 40,
@@ -180,7 +181,7 @@ class _SelectDateSectionState extends State<SelectDateSection> {
                           ),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
+                            children: <Widget>[
                               Text(time,
                                   style: Theme.of(context)
                                       .textTheme
@@ -201,32 +202,32 @@ class _SelectDateSectionState extends State<SelectDateSection> {
           Positioned(
             bottom: 30,
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 22),
+              padding: const EdgeInsets.symmetric(horizontal: 22),
               child: Row(
-                children: [
-                  Container(
+                children: <Widget>[
+                  SizedBox(
                     height: 60,
                     width: 60,
                     child: OutlinedButton(
                         style: OutlinedButton.styleFrom(
                           padding: EdgeInsets.zero,
                           side: const BorderSide(
-                              width: 1.0, color: Color(0xFF7D8186)),
+                              color: Color(0xFF7D8186)),
                         ),
                         onPressed: () => context
                             .read<HomeBloc>()
                             .add(StepToSelectService(step: 1)),
-                        child: Icon(Icons.arrow_back,
+                        child: const Icon(Icons.arrow_back,
                             size: 30, color: Color(0xFF7D8186))),
                   ),
-                  SizedBox(width: 14),
-                  Container(
+                  const SizedBox(width: 14),
+                  SizedBox(
                     height: 60,
                     width: MediaQuery.of(context).size.width - 118,
                     child: FilledButton(
                         onPressed: () =>
                             context.read<HomeBloc>().add(PostRecord()),
-                        child: Text("Забронировать")),
+                        child: const Text("Забронировать")),
                   ),
                 ],
               ),
@@ -256,6 +257,7 @@ class _SelectDateSectionState extends State<SelectDateSection> {
 
   Widget _dayCard(int day, Function(String) setDate) {
     return GestureDetector(
+
       onTap: () {
         setState(() {
           Feedback.forTap(context);
@@ -263,7 +265,7 @@ class _SelectDateSectionState extends State<SelectDateSection> {
           setDate(day.toString());
         });
         context.read<HomeBloc>().add(
-            SetDate(date: DateFormat("dd/MM/yyyy").format(DateTime(DateTime.now().year, currentMonth, day))));
+            SetDate(date: DateFormat("dd/MM/yyyy").format(DateTime(DateTime.now().year, currentMonth, day+1))));
       },
       child: Container(
           width: 55,
@@ -284,7 +286,7 @@ class _SelectDateSectionState extends State<SelectDateSection> {
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+            children: <Widget>[
               Text(
                   DateFormat.E("ru")
                       .format(
@@ -294,12 +296,12 @@ class _SelectDateSectionState extends State<SelectDateSection> {
                       fontSize: 12,
                       color: day == currentDay
                           ? Colors.white
-                          : Color(0xFFC3C7CC))),
+                          : const Color(0xFFC3C7CC))),
               Text(
                   DateFormat("dd.MM")
                       .format(
                           DateTime(DateTime.now().year, currentMonth, day + 1))
-                      .toString(),
+                      ,
                   style: Theme.of(context).textTheme.labelLarge?.copyWith(
                       color: day == currentDay
                           ? Colors.white

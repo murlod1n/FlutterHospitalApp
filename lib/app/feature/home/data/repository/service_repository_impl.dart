@@ -3,7 +3,7 @@ import "../../domain/repository/service_repository.dart";
 import "../api/services/api_service.dart";
 
 class ServiceRepositoryImpl implements ServiceRepository {
-  ServiceRepositoryImpl({required this.apiService});
+  ServiceRepositoryImpl({ required this.apiService });
 
   final ApiService apiService;
 

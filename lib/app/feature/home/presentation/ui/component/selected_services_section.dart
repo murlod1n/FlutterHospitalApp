@@ -5,7 +5,7 @@ import "package:go_router/go_router.dart";
 
 import "../../bloc/home_bloc/home_bloc.dart";
 import "../../bloc/service_bloc/service_bloc.dart";
-import "service_card.dart";
+import '../../../../shared/presentation/components/service_card.dart';
 
 class SelectedServicesSection extends StatelessWidget {
   const SelectedServicesSection({super.key});

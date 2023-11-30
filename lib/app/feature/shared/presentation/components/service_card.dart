@@ -1,6 +1,5 @@
-import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
-import "../../../../shared/presentation/model/service_ui.dart";
+import "../model/service_ui.dart";
 
 
 class ServiceCard extends StatelessWidget {
@@ -23,9 +22,9 @@ class ServiceCard extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(16),
           child: Column(
-            children: [
+            children: <Widget>[
               Row(
-                children: [
+                children: <Widget>[
                   Flexible(
                       child: Text(
                           service.name,
@@ -41,21 +40,21 @@ class ServiceCard extends StatelessWidget {
               ),
 
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 10),
+                padding: const EdgeInsets.symmetric(vertical: 10),
                 child: LayoutBuilder(
                   builder: (BuildContext context, BoxConstraints constraints) {
-                    final boxWidth = constraints.constrainWidth();
-                    const dashWidth = 1.5;
-                    final dashHeight = 1.0;
-                    final dashCount = (boxWidth / (2 * dashWidth)).floor();
+                    final double boxWidth = constraints.constrainWidth();
+                    const double dashWidth = 1.5;
+                    const double dashHeight = 1.0;
+                    final int dashCount = (boxWidth / (2 * dashWidth)).floor();
                     return Flex(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       direction: Axis.horizontal,
                       children: List.generate(dashCount, (_) {
-                        return SizedBox(
+                        return const SizedBox(
                           width: dashWidth,
                           height: dashHeight,
-                          child: const DecoratedBox(
+                          child: DecoratedBox(
                             decoration: BoxDecoration(color: Color(0x69ABABAB)),
                           ),
                         );
@@ -65,17 +64,17 @@ class ServiceCard extends StatelessWidget {
                 ),
               ),
               Row(
-                children: [
+                children: <Widget>[
                   RichText(
                     text: TextSpan(
                         text: "Стоимость продедуры: ",
                         style: Theme.of(context)
                             .textTheme
                             .titleSmall
-                            ?.copyWith(color: Color(0xFF7D8186), fontSize: 12),
-                        children: [
+                            ?.copyWith(color: const Color(0xFF7D8186), fontSize: 12),
+                        children: <InlineSpan>[
                           TextSpan(
-                              text: "${service.price.toString()} BYN",
+                              text: "${service.price} BYN",
                               style: Theme.of(context).textTheme.labelMedium)
                         ]),
                   )

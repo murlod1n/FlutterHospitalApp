@@ -1,13 +1,12 @@
-part of 'doctor_bloc.dart';
+part of "doctor_bloc.dart";
 
 enum DoctorStatus { initial, loading, success, error }
 
-extension HomeStateCheckStatus on DoctorStatus {
+extension DoctorStateCheckStatus on DoctorStatus {
   bool get isInitial => this == DoctorStatus.initial;
   bool get isLoading => this == DoctorStatus.loading;
   bool get isSuccess => this == DoctorStatus.success;
   bool get isError => this == DoctorStatus.error;
-
 }
 
 class DoctorState extends Equatable {
@@ -23,7 +22,7 @@ class DoctorState extends Equatable {
   final String error;
 
   @override
-  List<Object?> get props => [doctorList, status, error];
+  List<Object?> get props => <Object?>[doctorList, status, error];
 
   DoctorState copyWith({
     List<DoctorUI>? doctorList,
@@ -38,4 +37,3 @@ class DoctorState extends Equatable {
   }
 
 }
-

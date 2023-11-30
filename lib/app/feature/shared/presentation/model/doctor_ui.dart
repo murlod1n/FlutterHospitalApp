@@ -20,6 +20,6 @@ class DoctorUI extends Equatable {
   final String del;
 
   @override
-  List<Object?> get props => [kod, name, filial,dolzhnost,img,active,del];
+  List<Object?> get props => <Object?>[kod, name, filial,dolzhnost,img,active,del];
 
 }

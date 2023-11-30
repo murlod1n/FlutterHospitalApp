@@ -1,20 +1,15 @@
 import "package:auto_route/annotations.dart";
-import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
+import "package:go_router/go_router.dart";
+import "package:intl/intl.dart";
 
+import "../../../../../../core/extension/string_extension.dart";
 import "../../../../../service_locator/locator_config.dart";
 import "../../../../shared/data/storage/dao/database_dao.dart";
 import "../../../../shared/domain/entity/record_entity.dart";
+import "../../../../shared/presentation/components/error_section.dart";
 import "../../bloc/record_bloc.dart";
-import "../../model/record_to_doctor_ui.dart";
-
-class TestEmpty {
-  const TestEmpty({required this.age, required this.name});
-
-  final int age;
-  final String name;
-}
 
 class _RecordPageState extends State<RecordPage> {
   final DatabaseDao s = locator<DatabaseDao>();
@@ -23,12 +18,6 @@ class _RecordPageState extends State<RecordPage> {
 
   @override
   Widget build(BuildContext context) {
-    s.getAllRecords().listen((event) {
-      event.forEach((element) {
-        recordsList.putIfAbsent(element.date, () => []).add(element);
-      });
-      debugPrint("sort = " + recordsList.toString());
-    });
     return Scaffold(
         appBar: AppBar(
           shadowColor: Colors.black26,
@@ -46,36 +35,113 @@ class _RecordPageState extends State<RecordPage> {
         body: BlocBuilder<RecordBloc, RecordState>(
             builder: (BuildContext context, RecordState state) {
               final children = <Widget>[];
-              for(final String i in state.recordList.keys){
-                  children.add(
-                    Column(
+              for (final String i in state.recordSortedList.keys) {
+                children.add(Column(
+                  children: [
+                    Row(
                       children: [
-                        Text(i.toString()),
-                        SingleChildScrollView(
-                          child: ListView.builder(shrinkWrap: true, itemCount: state.recordList[i]!.length,itemBuilder: (BuildContext context, int index){
-                            return Column(
-                              children: [
-                                Text(state.recordList[i]![index].doctor.name.toString())
-                              ],
+                        Text(
+                            DateFormat.yMMMMd("ru")
+                                .format(DateFormat("dd/MM/yyyy").parse(i))
+                                .mmmmyDateFormat(),
+                            style: Theme.of(context).textTheme.titleSmall),
+                      ],
+                    ),
+                    SingleChildScrollView(
+                      child: ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: state.recordSortedList[i]!.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return GestureDetector(
+                              onTap: (){
+                                context.goNamed("detail", pathParameters: <String, String>{"id": state.recordSortedList[i]![index].id.toString()});
+                              },
+                              child: Container(
+                                padding: EdgeInsets.only(top: 11),
+                                child: SizedBox(
+                                  height: 46,
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        width: 60,
+                                        decoration: ShapeDecoration(
+                                          color: Color(0xFFFF0066),
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(8)),
+                                          shadows: const [
+                                            BoxShadow(
+                                              color: Color(0x63D6DBE1),
+                                              blurRadius: 40,
+                                              offset: Offset(0, 0),
+                                              spreadRadius: 0,
+                                            )
+                                          ],
+                                        ),
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Text(state.recordSortedList[i]![index].date
+                                                .split(" ")[1], style: Theme.of(context)
+                                                .textTheme
+                                                .labelLarge
+                                                ?.copyWith(color: Colors.white))
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                        padding: EdgeInsets.symmetric(horizontal: 10),
+                                        decoration: ShapeDecoration(
+                                          color: Colors.white,
+                                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                                          shadows: const [
+                                            BoxShadow(
+                                              color: Color(0x63D6DBE1),
+                                              blurRadius: 40,
+                                            )
+                                          ],
+                                        ),
+                                        width: MediaQuery.of(context).size.width - 104,
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(state.recordSortedList[i]![index].doctor.name, style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 12)),
+                                            Text(state
+                                                .recordSortedList[i]![index].doctor.dolzhnost, style: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 11))
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
                             );
                           }),
-                        )
-
-                      ],
-                    )
-                  );
+                    ),
+                    SizedBox(height: 20)
+                  ],
+                ));
               }
-          return Column(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(22),
-                child: SingleChildScrollView(
-                    child: Column(children: children),
-                ),
-              ),
-            ],
-          );
-        }));
+              return state.status.isSuccess ? Column(
+                children: [
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.all(22),
+                      child: SingleChildScrollView(
+                        clipBehavior: Clip.none,
+                        child: Column(children: children),
+                      ),
+                    ),
+                  ),
+                ],
+              ) : state.status.isError ? ErrorSection(onPress: (){
+                context.read<RecordBloc>().add(GetRecordList());
+              }, error: state.error) : SizedBox();
+
+        }
+        )
+    );
   }
 }
 

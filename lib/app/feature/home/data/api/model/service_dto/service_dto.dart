@@ -14,9 +14,9 @@ class ServiceDto {
 
   factory ServiceDto.fromJson(Map<String, dynamic> json) => _$ServiceDtoFromJson(json);
 
-   @JsonKey(name: 'Kod') String kod;
-   @JsonKey(name: 'Name') String name;
-   @JsonKey(name: 'Active') String active;
-   @JsonKey(name: 'Del') String del;
-   @JsonKey(name: 'Price') String price;
+   @JsonKey(name: "Kod") final String kod;
+   @JsonKey(name: "Name")final  String name;
+   @JsonKey(name: "Active")final  String active;
+   @JsonKey(name: "Del") final String del;
+   @JsonKey(name: "Price") final String price;
 }

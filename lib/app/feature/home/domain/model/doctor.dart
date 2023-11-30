@@ -10,12 +10,12 @@ class Doctor {
     required this.del
   });
 
-  int kod;
-  String name;
-  String filial;
-  String dolzhnost;
-  String img;
-  String active;
-  String del;
+  final int kod;
+  final String name;
+  final String filial;
+  final String dolzhnost;
+  final String img;
+  final String active;
+  final String del;
 
 }

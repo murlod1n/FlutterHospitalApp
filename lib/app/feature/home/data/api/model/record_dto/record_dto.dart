@@ -1,15 +1,16 @@
 import "dart:convert";
 
 import "package:freezed_annotation/freezed_annotation.dart";
+
 import "../doctor_dto/doctor_dto.dart";
 
-part 'record_dto.g.dart';
+part "record_dto.g.dart";
 
 @JsonSerializable()
 class RecordDto {
 
   RecordDto({
-   required this.doctor,
+    required this.doctor,
     required this.services,
     required this.date,
     required this.time

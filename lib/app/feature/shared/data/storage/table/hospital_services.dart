@@ -8,5 +8,4 @@ class HospitalServices extends Table {
   TextColumn get active => text()();
   TextColumn get del => text()();
   TextColumn get price => text()();
-
 }

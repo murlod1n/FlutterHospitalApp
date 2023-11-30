@@ -1,23 +1,25 @@
+import "dart:async";
+
 import "package:equatable/equatable.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
+
 import "../../../../shared/domain/entity/doctor_entity.dart";
 import "../../../../shared/domain/entity/record_entity.dart";
 import "../../../../shared/domain/entity/service_entity.dart";
+import "../../../../shared/presentation/model/doctor_ui.dart";
 import "../../../../shared/presentation/model/service_ui.dart";
 import "../../../domain/model/record_to_doctor.dart";
 import "../../../domain/usecase/insert_record_usecase.dart";
 import "../../../domain/usecase/post_record_usecase.dart";
-import '../../../../shared/presentation/model/doctor_ui.dart';
-import '../../model/home_record_ui.dart';
 import "../../mapper/home_ui_mapper.dart";
+import "../../model/home_record_ui.dart";
 
 part "home_event.dart";
-
 part "home_state.dart";
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc({required this.postRecordUseCase, required this.insertRecordUseCase})
-      : super(const HomeState(step: 0)) {
+      : super(const HomeState()) {
     on<SelectDoctor>(_selectDoctor);
     on<SelectService>(_selectService);
     on<StepToSelectService>(_stepToSelectService);
@@ -25,6 +27,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<PostRecord>(_postRecord);
     on<SetDate>(_setDate);
     on<SetTime>(_setTime);
+    on<Reset>(_reset);
+    on<ReturnToPage>(_returnToPage);
   }
 
   final PostRecordUseCase postRecordUseCase;
@@ -48,6 +52,16 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }
   }
 
+  void _reset(Reset event, Emitter<HomeState> emit) {
+      emit(const HomeState());
+  }
+
+  void _returnToPage(ReturnToPage event, Emitter<HomeState> emit) {
+    emit(state.copyWith(step: 2, error: "", status: HomeStatus.initial));
+
+  }
+
+
   void _stepToSelectDate(StepToSelectDate event, Emitter<HomeState> emit) {
     if (state.serviceList.isNotEmpty) {
       emit(state.copyWith(step: 2));
@@ -58,38 +72,38 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     if (state.time != null && state.date != null) {
       try {
         final RecordToDoctor response = await postRecordUseCase(
-            record: HomeRecordUI(
-                    doctor: state.doctor!,
-                    services: state.serviceList
-                        .map((ServiceUI e) => e.kod.toString())
-                        .toList(),
-                    date: state.date!,
-                    time: state.time!)
-                .toRecordToDoctor());
+          record: HomeRecordUI(
+            doctor: state.doctor!,
+            services: state.serviceList.map((ServiceUI e) => e.kod.toString()).toList(),
+            date: state.date!,
+            time: state.time!
+          ).toRecordToDoctor());
 
-        insertRecordUseCase(record: RecordEntity(
+        await insertRecordUseCase(record: RecordEntity(
+          id: 0,
+          date: "${state.date!} ${state.time!}",
+          doctor: DoctorEntity(
             id: 0,
-            date: "${state.date!} ${state.time!}",
-            doctor: DoctorEntity(
-                id: 0,
-                kod: response.doctor.kod,
-                name: response.doctor.name,
-                filial: response.doctor.filial,
-                dolzhnost: response.doctor.dolzhnost,
-                img: response.doctor.img,
-                active: response.doctor.active,
-                del: response.doctor.del),
-            services: state.serviceList
-                .map((ServiceUI e) => ServiceEntity(
-                    id: 0,
-                    kod: e.kod,
-                    name: e.name,
-                    active: e.active,
-                    del: e.del,
-                    price: e.price))
-                .toList())).then((value){}).onError((error, stackTrace){});
+            kod: response.doctor.kod,
+            name: response.doctor.name,
+            filial: response.doctor.filial,
+            dolzhnost: response.doctor.dolzhnost,
+            img: response.doctor.img,
+            active: response.doctor.active,
+            del: response.doctor.del
+          ),
+          services: state.serviceList.map(
+            (ServiceUI e) => ServiceEntity(
+              id: 0,
+              kod: e.kod,
+              name: e.name,
+              active: e.active,
+              del: e.del,
+              price: e.price)
+          ).toList()));
+        emit(state.copyWith(step: -1, status: HomeStatus.success));
       } catch (error) {
-
+        emit(state.copyWith(step: -1,status: HomeStatus.error, error: error.toString()));
       }
     }
   }

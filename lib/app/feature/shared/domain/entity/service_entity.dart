@@ -8,11 +8,12 @@ class ServiceEntity {
     required this.del,
     required this.price,
   });
-  int id;
-  int kod;
-  String name;
-  String active;
-  String del;
-  String price;
+
+  final int id;
+  final int kod;
+  final String name;
+  final String active;
+  final String del;
+  final String price;
 
 }

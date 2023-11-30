@@ -8,9 +8,8 @@ class RecordToDoctor {
     required this.time
   });
 
-  //todo create final
-  Doctor doctor;
-  List<String> services;
-  String date;
-  String time;
+  final Doctor doctor;
+  final List<String> services;
+  final String date;
+  final String time;
 }

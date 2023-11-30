@@ -6,7 +6,9 @@ import "package:go_router/go_router.dart";
 import "../../../../shared/presentation/model/service_ui.dart";
 import "../../bloc/home_bloc/home_bloc.dart";
 import "../../bloc/service_bloc/service_bloc.dart";
-import "../component/service_card.dart";
+import '../../../../shared/presentation/components/service_card.dart';
+import '../../../../shared/presentation/components/error_section.dart';
+import '../../../../shared/presentation/components/loading_indicator_section.dart';
 
 @RoutePage()
 class ServicePage extends StatelessWidget {
@@ -27,20 +29,27 @@ class ServicePage extends StatelessWidget {
         title:Text("Выбор услуги", textAlign: TextAlign.center),
       ),
       backgroundColor: const Color(0xFFF8F8F8),
-      body: BlocBuilder<HomeBloc, HomeState>(
-              builder: (BuildContext context, HomeState homeState) {
-            return BlocBuilder<ServiceBloc, ServiceState>(
-                builder: (BuildContext context, ServiceState serviceState) {
-                  return   serviceState.status.isSuccess
-                      ? _serviceList(serviceState.serviceList)
-                      : serviceState.status.isLoading
-                      ? const Center(child: Text("loading"))
-                      : serviceState.status.isError
-                      ? Center(child: Text(serviceState.error))
-                      : const SizedBox();
-                },
-            );
-          }),
+      body: Column(
+        children: [
+          BlocBuilder<HomeBloc, HomeState>(
+                  builder: (BuildContext context, HomeState homeState) {
+                return BlocBuilder<ServiceBloc, ServiceState>(
+                    builder: (BuildContext context, ServiceState serviceState) {
+                      return Expanded(
+                        child: serviceState.status.isSuccess
+                            ? _serviceList(serviceState.serviceList)
+                            : serviceState.status.isLoading ? Center(child: LoadingIndicatorSection())
+                            : serviceState.status.isError ? Center(
+                              child: ErrorSection(
+                              onPress: () => context.read<ServiceBloc>().add(GetServiceList(doctorKod: homeState.doctor!.kod)),
+                              error: serviceState.error),
+                            ) : const SizedBox(),
+                      );
+                    },
+                );
+              }),
+        ],
+      ),
     );
   }
 
@@ -55,6 +64,7 @@ class ServicePage extends StatelessWidget {
               ListView.builder(
                   itemCount: serviceList.length,
                   shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
                         padding: const EdgeInsets.only(bottom: 12),

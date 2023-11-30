@@ -9,7 +9,7 @@ import "../table/records.dart";
 
 part "database.g.dart";
 
-@DriftDatabase(tables: [Records, HospitalServices, Doctors])
+@DriftDatabase(tables: <Type>[Records, HospitalServices, Doctors])
 class Database extends _$Database {
   Database() : super(_openConnection());
 
@@ -22,9 +22,10 @@ class Database extends _$Database {
 
 LazyDatabase _openConnection() {
   return LazyDatabase(() async {
-    final dbFolder = await getApplicationDocumentsDirectory();
-    final file = File(p.join(dbFolder.path, 'db.sqlite'));
+    final Directory dbFolder = await getApplicationDocumentsDirectory();
+    final File file = File(p.join(dbFolder.path, "db.sqlite"));
 
     return NativeDatabase.createInBackground(file);
   });
+
 }

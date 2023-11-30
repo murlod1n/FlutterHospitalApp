@@ -28,21 +28,21 @@ class ApiService {
 
   Future<List<Service>> getServiceDtoList({required int kod }) {
     return getResponseListFuncWrapper<Service, ServiceDto>(
-        request: () => dioClient.post(servicesUrl, data: FormData.fromMap({'Kod': kod})),
-        fromJson: (Map<String, dynamic> json) => ServiceDto.fromJson(json),
-        toD: (ServiceDto serviceDto) => serviceDto.toService(),
-        dataKey: "items"
+      request: () => dioClient.post(servicesUrl, data: FormData.fromMap({'Kod': kod})),
+      fromJson: (Map<String, dynamic> json) => ServiceDto.fromJson(json),
+      toD: (ServiceDto serviceDto) => serviceDto.toService(),
+      dataKey: "items"
     );
   }
 
   Future<RecordToDoctor> postRecord({required RecordDto record }) {
     return getResponseFuncWrapper<RecordToDoctor, RecordDto>(
-        request: () => dioClient.post(addNewRecord, data: FormData.fromMap({
-          "doctor": record.doctor.kod,
-          "date": record.date,
-          "time": record.time,
-          "services": jsonEncode(record.services)
-        })),
+      request: () => dioClient.post(addNewRecord, data: FormData.fromMap({
+        "doctor": record.doctor.kod,
+        "date": record.date,
+        "time": record.time,
+        "services": jsonEncode(record.services)
+      })),
         fromJson: (Map<String, dynamic> json) => RecordDto.fromJson(json),
         toD: (RecordDto recordDto) => recordDto.toHospitalRecord(),
         dataKey: "record"

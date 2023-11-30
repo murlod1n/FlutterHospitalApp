@@ -1,4 +1,4 @@
-part of 'service_bloc.dart';
+part of "service_bloc.dart";
 
 enum ServiceStatus { initial, loading, success, error }
 
@@ -24,7 +24,7 @@ class ServiceState extends Equatable {
   final String error;
 
   @override
-  List<Object?> get props => [serviceList, status, error];
+  List<Object?> get props => <Object?>[serviceList, status, error];
 
   ServiceState copyWith({
     List<ServiceUI>? serviceList,

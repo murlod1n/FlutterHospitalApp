@@ -1,4 +1,4 @@
-part of 'record_bloc.dart';
+part of "record_bloc.dart";
 
 
 sealed class RecordEvent extends Equatable {}
@@ -17,4 +17,3 @@ class SetRecordList extends RecordEvent {
   List<Object?> get props => <Object?>[recordList];
 
 }
-

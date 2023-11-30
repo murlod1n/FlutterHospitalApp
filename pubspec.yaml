@@ -49,6 +49,7 @@ dependencies:
 
   freezed_annotation: ^2.2.0
   observable: ^0.24.0
+  loading_indicator: ^3.1.1
 
   #bloc
   bloc: ^8.0.0
@@ -101,9 +102,12 @@ flutter:
     - assets/images/i_icon.svg
     - assets/images/imp_icon.svg
     - assets/images/layers_icon.svg
+    - assets/images/active_layers_icon.svg
     - assets/images/profile_icon.svg
     - assets/images/schedule_icon.svg
-  #   - images/a_dot_ham.jpeg
+    - assets/images/error_icon.png
+    - assets/images/success_icon.png
+    - assets/images/active_hospital_icon.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

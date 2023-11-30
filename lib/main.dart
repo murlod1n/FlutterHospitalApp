@@ -2,6 +2,7 @@ import "dart:io";
 
 import "package:flutter/material.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
+import "package:intl/date_symbol_data_local.dart";
 import "app/feature/home/domain/usecase/get_doctor_list_usecase.dart";
 import "app/feature/home/domain/usecase/get_service_list_usecase.dart";
 import "app/feature/home/domain/usecase/insert_record_usecase.dart";
@@ -35,6 +36,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    initializeDateFormatting("ru_RU");
     return MultiBlocProvider(
       providers: [
         BlocProvider<DoctorBloc>(
@@ -53,7 +55,7 @@ class MyApp extends StatelessWidget {
                 getRecordListUseCase: locator<GetRecordListUseCase>())..add(GetRecordList())),
       ],
       child: MaterialApp.router(
-        title: 'Flutter Demo',
+        title: "Hospital Flutter App",
         theme: AppTheme.light,
         routerConfig: router,
       ),
