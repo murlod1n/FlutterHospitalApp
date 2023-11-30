@@ -2,12 +2,7 @@ import "package:auto_route/annotations.dart";
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
-import "../../../../../service_locator/locator_config.dart";
-import "../../../domain/usecase/get_doctor_list_usecase.dart";
-import "../../../domain/usecase/get_service_list_usecase.dart";
-import "../../bloc/doctor_bloc/doctor_bloc.dart";
-import "../../bloc/record_bloc/record_bloc.dart";
-import "../../bloc/service_bloc/service_bloc.dart";
+import "../../bloc/home_bloc/home_bloc.dart";
 import "../component/select_date_section.dart";
 import "../component/select_doctor_section.dart";
 import "../component/selected_services_section.dart";
@@ -32,11 +27,11 @@ class _HomePageState extends State<HomePage> {
             children: <Widget>[Text("Запись на приём")]),
       ),
       backgroundColor: const Color(0xFFF8F8F8),
-      body: BlocBuilder<RecordBloc, RecordState>(
-              builder: (BuildContext context, RecordState state) {
+      body: BlocBuilder<HomeBloc, HomeState>(
+              builder: (BuildContext context, HomeState state) {
             return Column(
               children: <Widget>[
-                Container(padding: EdgeInsets.only(top: 20, left: 16, right: 16, bottom: 0),child: StepIndicator(step: state.step)),
+                Container(padding: const EdgeInsets.only(top: 20, left: 22, right: 22),child: StepIndicator(step: state.step)),
                 state.step == 0
                     ? SelectDoctorSection()
                     : state.step == 1

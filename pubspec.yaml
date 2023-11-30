@@ -30,8 +30,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
@@ -45,7 +43,7 @@ dependencies:
   sqlite3_flutter_libs: ^0.5.0
   path_provider: ^2.0.0
   path: ^1.8.3
-
+  flutter_svg: ^2.0.9
   intl: ^0.18.1
   flutter_riverpod: ^2.4.8
 
@@ -96,8 +94,15 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - assets/images/arrow_l.svg
+    - assets/images/arrow_r.svg
+    - assets/images/hospital_icon.svg
+    - assets/images/i_icon.svg
+    - assets/images/imp_icon.svg
+    - assets/images/layers_icon.svg
+    - assets/images/profile_icon.svg
+    - assets/images/schedule_icon.svg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -111,10 +116,14 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter-Regular.ttf
+        - asset: assets/fonts/Inter-ExtraBold.ttf
+          weight: 700
+        - asset: assets/fonts/Inter-Medium.ttf
+
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

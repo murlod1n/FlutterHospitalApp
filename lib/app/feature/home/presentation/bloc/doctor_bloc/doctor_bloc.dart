@@ -1,9 +1,10 @@
 import "package:bloc/bloc.dart";
 import "package:equatable/equatable.dart";
+import "package:flutter/cupertino.dart";
 import '../../../domain/model/doctor.dart';
 import '../../../domain/usecase/get_doctor_list_usecase.dart';
-import '../../mapper/ui_mapper.dart';
-import '../../model/doctor_ui.dart';
+import '../../../../shared/presentation/model/doctor_ui.dart';
+import "../../mapper/home_ui_mapper.dart";
 
 part 'doctor_event.dart';
 
@@ -23,6 +24,7 @@ class DoctorBloc extends Bloc<DoctorEvent, DoctorState> {
 
       final List<Doctor> doctorList = await getDoctorListUseCase.get();
 
+      debugPrint(doctorList.toString());
       emit(
           state.copyWith(
               doctorList: doctorList.map((Doctor e) => e.toDoctorUI()).toList(),

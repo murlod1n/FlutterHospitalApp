@@ -10,29 +10,29 @@ class StepIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.3),
-            blurRadius: 50,
+            color: Color(0x63D6DBE1),
+            blurRadius: 40,
           ),
         ],
         borderRadius: BorderRadius.circular(10),
-        color: Color(0xFFFFFFFF),
+        color: Theme.of(context).colorScheme.surface,
       ),
-      padding: const EdgeInsets.only(left: 50, right: 50, top: 25, bottom: 25),
+      padding: const EdgeInsets.only(left: 40, right: 40, top: 20, bottom: 20),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         Container(
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: step == 0 ? Colors.blue : Colors.grey,
+            color: step == 0 ? Theme.of(context).colorScheme.primary : step > 0 ?  Theme.of(context).colorScheme.onBackground  : const Color(0xFFC3C7CC),
           ),
           width: 25,
           height: 25,
-          child: const Center(child: Text("1")),
+          child: const Center(child: Text("1", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: Colors.white))),
         ),
         const SizedBox(width: 6),
         if (step == 0)
-          const Row(children: <Widget>[Text("Врач"), SizedBox(width: 6)])
+          Row(children: <Widget>[Text("Врач", style: Theme.of(context).textTheme.labelLarge?.copyWith(fontSize: 12)), SizedBox(width: 6)])
         else
           const SizedBox(),
         Expanded(
@@ -45,15 +45,15 @@ class StepIndicator extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: step == 1 ? Colors.blue : Colors.grey,
+            color: step == 1 ? Theme.of(context).colorScheme.primary : step > 1 ?  Theme.of(context).colorScheme.onBackground  : const Color(0xFFC3C7CC),
           ),
           width: 25,
           height: 25,
-          child: const Center(child: Text("2")),
+          child: const Center(child: Text("2", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: Colors.white))),
         ),
         const SizedBox(width: 6),
         if (step == 1)
-          const Row(children: <Widget>[Text("Услуги"), SizedBox(width: 6)])
+          Row(children: <Widget>[Text("Услуги", style: Theme.of(context).textTheme.labelLarge?.copyWith(fontSize: 12)), const SizedBox(width: 6)])
         else
           const SizedBox(),
         Expanded(
@@ -66,15 +66,15 @@ class StepIndicator extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: step == 2 ? Colors.blue : Colors.grey,
+            color: step == 2 ? Theme.of(context).colorScheme.primary : step > 2 ?  Theme.of(context).colorScheme.onBackground  : const Color(0xFFC3C7CC),
           ),
           width: 25,
           height: 25,
-          child: const Center(child: Text('${3}')),
+          child: const Center(child: Text("3", style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: Colors.white))),
         ),
         const SizedBox(width: 6),
         if (step == 2)
-          Row(children: [Text("Дата"), SizedBox(width: 6)])
+          Row(children: [Text("Дата", style: Theme.of(context).textTheme.labelLarge?.copyWith(fontSize: 12)), const SizedBox(width: 6)])
         else
           SizedBox(),
       ]),

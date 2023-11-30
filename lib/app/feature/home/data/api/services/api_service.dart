@@ -5,7 +5,7 @@ import "../../../../../../core/internet_service/dio_client.dart";
 import "../../../../../../core/internet_service/get_response_func_wrapper.dart";
 import "../../../../../../core/internet_service/urls.dart";
 import "../../../domain/model/doctor.dart";
-import "../../../domain/model/hospital_record.dart";
+import "../../../domain/model/record_to_doctor.dart";
 import "../../../domain/model/service.dart";
 import "../../mapper/dto_mapper.dart";
 import "../model/doctor_dto/doctor_dto.dart";
@@ -35,8 +35,8 @@ class ApiService {
     );
   }
 
-  Future<HospitalRecord> postRecord({required RecordDto record }) {
-    return getResponseFuncWrapper<HospitalRecord, RecordDto>(
+  Future<RecordToDoctor> postRecord({required RecordDto record }) {
+    return getResponseFuncWrapper<RecordToDoctor, RecordDto>(
         request: () => dioClient.post(addNewRecord, data: FormData.fromMap({
           "doctor": record.doctor.kod,
           "date": record.date,

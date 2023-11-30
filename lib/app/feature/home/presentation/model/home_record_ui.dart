@@ -1,7 +1,8 @@
-import "doctor.dart";
 
-class HospitalRecord {
-  HospitalRecord({
+import "../../../shared/presentation/model/doctor_ui.dart";
+
+class HomeRecordUI {
+  HomeRecordUI({
     required this.doctor,
     required this.services,
     required this.date,
@@ -9,7 +10,7 @@ class HospitalRecord {
   });
 
   //todo create final
-  Doctor doctor;
+  DoctorUI doctor;
   List<String> services;
   String date;
   String time;

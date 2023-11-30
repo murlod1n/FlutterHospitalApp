@@ -1,7 +1,10 @@
-import "../model/hospital_record.dart";
+import "../../../shared/domain/entity/record_entity.dart";
+import "../model/record_to_doctor.dart";
 
 abstract interface class RecordRepository {
 
-  Future<HospitalRecord> postRecord({required HospitalRecord record});
+  Future<RecordToDoctor> postRecord({required RecordToDoctor record});
+
+  Future<void> insertRecord({required RecordEntity recordEntity});
 
 }

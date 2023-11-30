@@ -1,5 +1,5 @@
 import "../../domain/model/doctor.dart";
-import "../../domain/model/hospital_record.dart";
+import "../../domain/model/record_to_doctor.dart";
 import "../../domain/model/service.dart";
 import "../api/model/doctor_dto/doctor_dto.dart";
 import "../api/model/record_dto/record_dto.dart";
@@ -45,9 +45,9 @@ extension ToService on ServiceDto {
   }
 }
 
-extension ToHospitalRecord on RecordDto {
-  HospitalRecord toHospitalRecord() {
-    return HospitalRecord(
+extension ToRecordToDoctor on RecordDto {
+  RecordToDoctor toHospitalRecord() {
+    return RecordToDoctor(
         doctor: doctor.toDoctor(),
         services: services,
         date: date,
@@ -56,7 +56,7 @@ extension ToHospitalRecord on RecordDto {
   }
 }
 
-extension ToRecordDto on HospitalRecord {
+extension ToRecordDto on RecordToDoctor {
   RecordDto toRecordDto() {
     return RecordDto(
         doctor: doctor.toDoctorDto(),

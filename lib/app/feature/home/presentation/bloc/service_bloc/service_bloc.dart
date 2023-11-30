@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import "package:equatable/equatable.dart";
+import "../../../../shared/presentation/model/service_ui.dart";
 import "../../../domain/model/service.dart";
 import "../../../domain/usecase/get_service_list_usecase.dart";
-import "../../mapper/ui_mapper.dart";
-import "../../model/service_ui.dart";
+import "../../mapper/home_ui_mapper.dart";
 
 part 'service_event.dart';
 

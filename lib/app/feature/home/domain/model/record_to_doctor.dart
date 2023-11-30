@@ -1,14 +1,15 @@
-import "doctor_ui.dart";
+import "doctor.dart";
 
-class HospitalRecordUI {
-  HospitalRecordUI({
+class RecordToDoctor {
+  RecordToDoctor({
     required this.doctor,
     required this.services,
     required this.date,
     required this.time
   });
 
-  DoctorUI doctor;
+  //todo create final
+  Doctor doctor;
   List<String> services;
   String date;
   String time;

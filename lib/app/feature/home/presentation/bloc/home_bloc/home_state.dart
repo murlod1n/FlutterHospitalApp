@@ -1,9 +1,9 @@
-part of 'record_bloc.dart';
+part of 'home_bloc.dart';
 
 
-class RecordState extends Equatable {
+class HomeState extends Equatable {
 
-  const RecordState({
+  const HomeState({
     required this.step,
     this.doctor,
     this.date,
@@ -20,14 +20,14 @@ class RecordState extends Equatable {
   @override
   List<Object?> get props => [step, doctor, serviceList, date, time];
 
-  RecordState copyWith({
+  HomeState copyWith({
     required int step,
     DoctorUI? doctor,
     List<ServiceUI>? serviceList,
     String? date,
     String? time,
   }) {
-    return RecordState(
+    return HomeState(
       step: step,
       doctor: doctor ?? this.doctor,
       serviceList: serviceList ?? this.serviceList,

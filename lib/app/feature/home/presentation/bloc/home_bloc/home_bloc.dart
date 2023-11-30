@@ -1,23 +1,23 @@
 import "package:equatable/equatable.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
-import "../../../../shared/data/storage/dao/database_dao.dart";
-import "../../../../shared/data/storage/entity/doctor_entity.dart";
-import "../../../../shared/data/storage/entity/service_entity.dart";
-import "../../../../shared/data/storage/entity/record_entity.dart";
-import "../../../domain/model/hospital_record.dart";
+import "../../../../shared/domain/entity/doctor_entity.dart";
+import "../../../../shared/domain/entity/record_entity.dart";
+import "../../../../shared/domain/entity/service_entity.dart";
+import "../../../../shared/presentation/model/service_ui.dart";
+import "../../../domain/model/record_to_doctor.dart";
+import "../../../domain/usecase/insert_record_usecase.dart";
 import "../../../domain/usecase/post_record_usecase.dart";
-import "../../mapper/ui_mapper.dart";
-import "../../model/doctor_ui.dart";
-import "../../model/hospital_record_ui.dart";
-import "../../model/service_ui.dart";
+import '../../../../shared/presentation/model/doctor_ui.dart';
+import '../../model/home_record_ui.dart';
+import "../../mapper/home_ui_mapper.dart";
 
-part "record_event.dart";
+part "home_event.dart";
 
-part "record_state.dart";
+part "home_state.dart";
 
-class RecordBloc extends Bloc<RecordEvent, RecordState> {
-  RecordBloc({required this.postRecordUseCase, required this.databaseDao})
-      : super(const RecordState(step: 0)) {
+class HomeBloc extends Bloc<HomeEvent, HomeState> {
+  HomeBloc({required this.postRecordUseCase, required this.insertRecordUseCase})
+      : super(const HomeState(step: 0)) {
     on<SelectDoctor>(_selectDoctor);
     on<SelectService>(_selectService);
     on<StepToSelectService>(_stepToSelectService);
@@ -28,13 +28,13 @@ class RecordBloc extends Bloc<RecordEvent, RecordState> {
   }
 
   final PostRecordUseCase postRecordUseCase;
-  final DatabaseDao databaseDao;
+  final InsertRecordUseCase insertRecordUseCase;
 
-  void _selectDoctor(SelectDoctor event, Emitter<RecordState> emit) {
+  void _selectDoctor(SelectDoctor event, Emitter<HomeState> emit) {
     emit(state.copyWith(step: state.step, doctor: event.doctor));
   }
 
-  void _selectService(SelectService event, Emitter<RecordState> emit) {
+  void _selectService(SelectService event, Emitter<HomeState> emit) {
     final List<ServiceUI> newList = List<ServiceUI>.from(state.serviceList)
       ..add(event.service);
 
@@ -42,34 +42,34 @@ class RecordBloc extends Bloc<RecordEvent, RecordState> {
   }
 
   void _stepToSelectService(
-      StepToSelectService event, Emitter<RecordState> emit) {
+      StepToSelectService event, Emitter<HomeState> emit) {
     if (state.doctor != null) {
       emit(state.copyWith(step: event.step));
     }
   }
 
-  void _stepToSelectDate(StepToSelectDate event, Emitter<RecordState> emit) {
+  void _stepToSelectDate(StepToSelectDate event, Emitter<HomeState> emit) {
     if (state.serviceList.isNotEmpty) {
       emit(state.copyWith(step: 2));
     }
   }
 
-  Future<void> _postRecord(PostRecord event, Emitter<RecordState> emit) async {
+  Future<void> _postRecord(PostRecord event, Emitter<HomeState> emit) async {
     if (state.time != null && state.date != null) {
       try {
-        final HospitalRecord response = await postRecordUseCase(
-            record: HospitalRecordUI(
+        final RecordToDoctor response = await postRecordUseCase(
+            record: HomeRecordUI(
                     doctor: state.doctor!,
                     services: state.serviceList
                         .map((ServiceUI e) => e.kod.toString())
                         .toList(),
                     date: state.date!,
                     time: state.time!)
-                .toHospitalRecord());
+                .toRecordToDoctor());
 
-        databaseDao.insertRecord(RecordEntity(
+        insertRecordUseCase(record: RecordEntity(
             id: 0,
-            date: "asd",
+            date: "${state.date!} ${state.time!}",
             doctor: DoctorEntity(
                 id: 0,
                 kod: response.doctor.kod,
@@ -87,18 +87,18 @@ class RecordBloc extends Bloc<RecordEvent, RecordState> {
                     active: e.active,
                     del: e.del,
                     price: e.price))
-                .toList()));
+                .toList())).then((value){}).onError((error, stackTrace){});
       } catch (error) {
 
       }
     }
   }
 
-  void _setDate(SetDate event, Emitter<RecordState> emit) {
+  void _setDate(SetDate event, Emitter<HomeState> emit) {
     emit(state.copyWith(date: event.date, step: state.step));
   }
 
-  void _setTime(SetTime event, Emitter<RecordState> emit) {
+  void _setTime(SetTime event, Emitter<HomeState> emit) {
     emit(state.copyWith(time: event.time, step: state.step));
   }
 }

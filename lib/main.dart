@@ -1,16 +1,31 @@
+import "dart:io";
+
 import "package:flutter/material.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
 import "app/feature/home/domain/usecase/get_doctor_list_usecase.dart";
 import "app/feature/home/domain/usecase/get_service_list_usecase.dart";
+import "app/feature/home/domain/usecase/insert_record_usecase.dart";
 import "app/feature/home/domain/usecase/post_record_usecase.dart";
 import "app/feature/home/presentation/bloc/doctor_bloc/doctor_bloc.dart";
-import "app/feature/home/presentation/bloc/record_bloc/record_bloc.dart";
+import "app/feature/home/presentation/bloc/home_bloc/home_bloc.dart";
 import "app/feature/home/presentation/bloc/service_bloc/service_bloc.dart";
-import "app/feature/shared/data/storage/dao/database_dao.dart";
+import "app/feature/record/domain/usecase/get_record_list_usecase.dart";
+import "app/feature/record/presentation/bloc/record_bloc.dart";
 import "app/routing/app_router.dart";
 import "app/service_locator/locator_config.dart";
+import "app/theme/theme.dart";
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
+}
 
 Future<void> main() async {
+  HttpOverrides.global = MyHttpOverrides();
   await initializeLocator();
   runApp(const MyApp());
 }
@@ -29,15 +44,19 @@ class MyApp extends StatelessWidget {
         BlocProvider<ServiceBloc>(
             create: (BuildContext context) => ServiceBloc(
                 getServiceListUseCase: locator<GetServiceListUseCase>())),
-        BlocProvider<RecordBloc>(create: (BuildContext context) => RecordBloc(postRecordUseCase: locator<PostRecordUseCase>(), databaseDao: locator<DatabaseDao>()))
+        BlocProvider<HomeBloc>(
+            create: (BuildContext context) => HomeBloc(
+                postRecordUseCase: locator<PostRecordUseCase>(),
+                insertRecordUseCase: locator<InsertRecordUseCase>())),
+        BlocProvider<RecordBloc>(
+            create: (BuildContext context) => RecordBloc(
+                getRecordListUseCase: locator<GetRecordListUseCase>())..add(GetRecordList())),
       ],
       child: MaterialApp.router(
-          title: 'Flutter Demo',
-          theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-            useMaterial3: true,
-          ),
-          routerConfig: router),
+        title: 'Flutter Demo',
+        theme: AppTheme.light,
+        routerConfig: router,
+      ),
     );
   }
 }

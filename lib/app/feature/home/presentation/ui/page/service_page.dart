@@ -3,15 +3,9 @@ import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:go_router/go_router.dart";
-
-import "../../../../../routing/app_router.dart";
-import "../../../../../service_locator/locator_config.dart";
-import "../../../domain/usecase/get_doctor_list_usecase.dart";
-import "../../../domain/usecase/get_service_list_usecase.dart";
-import "../../bloc/doctor_bloc/doctor_bloc.dart";
-import "../../bloc/record_bloc/record_bloc.dart";
+import "../../../../shared/presentation/model/service_ui.dart";
+import "../../bloc/home_bloc/home_bloc.dart";
 import "../../bloc/service_bloc/service_bloc.dart";
-import "../../model/service_ui.dart";
 import "../component/service_card.dart";
 
 @RoutePage()
@@ -29,13 +23,12 @@ class ServicePage extends StatelessWidget {
             borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(10),
                 bottomRight: Radius.circular(10))),
-        title: const Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[Text("Запись на приём")]),
+        centerTitle: true,
+        title:Text("Выбор услуги", textAlign: TextAlign.center),
       ),
       backgroundColor: const Color(0xFFF8F8F8),
-      body: BlocBuilder<RecordBloc, RecordState>(
-              builder: (BuildContext context, RecordState recordState) {
+      body: BlocBuilder<HomeBloc, HomeState>(
+              builder: (BuildContext context, HomeState homeState) {
             return BlocBuilder<ServiceBloc, ServiceState>(
                 builder: (BuildContext context, ServiceState serviceState) {
                   return   serviceState.status.isSuccess
@@ -52,29 +45,28 @@ class ServicePage extends StatelessWidget {
   }
 
   Widget _serviceList(List<ServiceUI> serviceList) {
-    return BlocBuilder<RecordBloc, RecordState>(
-        builder: (BuildContext context, RecordState state) {
+    return BlocBuilder<HomeBloc, HomeState>(
+        builder: (BuildContext context, HomeState state) {
       return SingleChildScrollView(
-        child: Column(
-          children: [
-            const Row(
-              children: [Text("Выберите сервис")],
-            ),
-            const SizedBox(height: 15),
-            ListView.builder(
-                itemCount: serviceList.length,
-                shrinkWrap: true,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                      padding: const EdgeInsets.only(bottom: 12),
-                      child: ServiceCard(
-                        service: serviceList[index],
-                        selectService: () => {
-                          context.read<RecordBloc>().add(SelectService(service: serviceList[index])),
-                          GoRouter.of(context).pop()
-                        }));
-                }),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(22),
+          child: Column(
+            children: [
+              ListView.builder(
+                  itemCount: serviceList.length,
+                  shrinkWrap: true,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                        padding: const EdgeInsets.only(bottom: 12),
+                        child: ServiceCard(
+                          service: serviceList[index],
+                          selectService: () => {
+                            context.read<HomeBloc>().add(SelectService(service: serviceList[index])),
+                            GoRouter.of(context).pop()
+                          }));
+                  }),
+            ],
+          ),
         ),
       );
     });

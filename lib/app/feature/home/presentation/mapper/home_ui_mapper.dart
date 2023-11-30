@@ -1,9 +1,10 @@
-import "../../domain/model/doctor.dart";
-import "../../domain/model/hospital_record.dart";
-import "../../domain/model/service.dart";
-import "../model/doctor_ui.dart";
-import "../model/hospital_record_ui.dart";
-import "../model/service_ui.dart";
+import "../../../home/domain/model/doctor.dart";
+import "../../../home/domain/model/record_to_doctor.dart";
+import "../../../home/domain/model/service.dart";
+import "../../../shared/presentation/model/doctor_ui.dart";
+import "../model/home_record_ui.dart";
+import "../../../shared/presentation/model/service_ui.dart";
+
 
 extension ToDoctorUI on Doctor {
   DoctorUI toDoctorUI() {
@@ -48,9 +49,9 @@ extension ToServiceUI on Service {
 
 
 
-extension ToHospitalRecordUI on HospitalRecord {
-  HospitalRecordUI toHospitalRecordUI() {
-    return HospitalRecordUI(
+extension ToRecordToDoctorUI on RecordToDoctor {
+  HomeRecordUI toRecordToDoctorUI() {
+    return HomeRecordUI(
         doctor: doctor.toDoctorUI(),
         services: services,
         date: date,
@@ -60,9 +61,9 @@ extension ToHospitalRecordUI on HospitalRecord {
 }
 
 
-extension ToHospitalRecord on HospitalRecordUI {
-  HospitalRecord toHospitalRecord() {
-    return HospitalRecord(
+extension ToRecordToDoctor on HomeRecordUI {
+  RecordToDoctor toRecordToDoctor() {
+    return RecordToDoctor(
         doctor: doctor.toDoctor(),
         services: services,
         date: date,

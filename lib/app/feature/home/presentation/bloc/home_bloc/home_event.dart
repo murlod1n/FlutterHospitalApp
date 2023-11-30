@@ -1,8 +1,8 @@
-part of 'record_bloc.dart';
+part of 'home_bloc.dart';
 
-sealed class RecordEvent extends Equatable {}
+sealed class HomeEvent extends Equatable {}
 
-class SelectDoctor extends RecordEvent {
+class SelectDoctor extends HomeEvent {
   SelectDoctor({required this.doctor});
 
   final DoctorUI doctor;
@@ -11,7 +11,7 @@ class SelectDoctor extends RecordEvent {
   List<Object?> get props => [doctor];
 }
 
-class SelectService extends RecordEvent {
+class SelectService extends HomeEvent {
   SelectService({required this.service});
 
   final ServiceUI service;
@@ -20,7 +20,7 @@ class SelectService extends RecordEvent {
   List<Object?> get props => [service];
 }
 
-class StepToSelectService extends RecordEvent {
+class StepToSelectService extends HomeEvent {
   StepToSelectService({required this.step});
 
   final int step;
@@ -29,7 +29,7 @@ class StepToSelectService extends RecordEvent {
   List<Object?> get props => <Object?>[step];
 }
 
-class StepToSelectDate extends RecordEvent {
+class StepToSelectDate extends HomeEvent {
   StepToSelectDate({required this.step});
 
   final int step;
@@ -38,13 +38,13 @@ class StepToSelectDate extends RecordEvent {
   List<Object?> get props => <Object?>[step];
 }
 
-class PostRecord extends RecordEvent {
+class PostRecord extends HomeEvent {
 
   List<Object?> get props => <Object?>[];
 
 }
 
-class SetDate extends RecordEvent {
+class SetDate extends HomeEvent {
   SetDate({required this.date});
 
   final String date;
@@ -53,7 +53,7 @@ class SetDate extends RecordEvent {
   List<Object?> get props => <Object?>[date];
 }
 
-class SetTime extends RecordEvent {
+class SetTime extends HomeEvent {
   SetTime({required this.time});
 
   final String time;
