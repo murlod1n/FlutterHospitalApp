@@ -1,10 +1,10 @@
 import "package:flutter/cupertino.dart";
 import "package:go_router/go_router.dart";
 
-import "../feature/home/presentation/ui/page/home_page.dart";
-import "../feature/home/presentation/ui/page/service_page.dart";
-import "../feature/record/presentation/ui/page/record_detail_page.dart";
-import "../feature/record/presentation/ui/page/record_page.dart";
+import "../feature/home/presentation/ui/screen/home_screen.dart";
+import "../feature/home/presentation/ui/screen/service_screen.dart";
+import "../feature/record/presentation/ui/screen/record_detail_screen.dart";
+import "../feature/record/presentation/ui/screen/record_screen.dart";
 import "../feature/shared/presentation/components/scaffold_with_nav_bar.dart";
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -26,11 +26,11 @@ final GoRouter router = GoRouter(
             GoRoute(
               path: "/home",
               pageBuilder: (BuildContext context, GoRouterState state) =>
-                const NoTransitionPage<dynamic>(child: HomePage()),
+                const NoTransitionPage<dynamic>(child: HomeScreen()),
               routes: <RouteBase>[
                 GoRoute(
                   path: "services",
-                  builder: (BuildContext context, GoRouterState state) => ServicePage()
+                  builder: (BuildContext context, GoRouterState state) => const ServiceScreen()
                 )
               ]
             )
@@ -40,13 +40,13 @@ final GoRouter router = GoRouter(
           GoRoute(
             path: "/records",
             pageBuilder: (BuildContext context, GoRouterState state) =>
-              const NoTransitionPage<dynamic>(child: RecordPage()),
+              const NoTransitionPage<dynamic>(child: RecordScreen()),
               routes: <RouteBase>[
                 GoRoute(
                   path: "detail/:id",
                   name: "detail",
                   builder: (BuildContext context, GoRouterState state) =>
-                    RecordDetailPage(recordId: int.parse(state.pathParameters["id"]!))
+                    RecordDetailScreen(recordId: int.parse(state.pathParameters["id"]!))
                 )
               ]
           )

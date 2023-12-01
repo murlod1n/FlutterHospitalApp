@@ -8,7 +8,6 @@ class DioClient {
       baseUrl: baseUrl,
       connectTimeout: const Duration(seconds: 60),
       receiveTimeout: const Duration(seconds: 60),
-      //todo
       headers: <String, String>{"Login": "narisuemvse", "Password": "!by123narisuemvse" }
     )
   );

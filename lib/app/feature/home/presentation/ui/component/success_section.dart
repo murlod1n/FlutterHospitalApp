@@ -12,13 +12,14 @@ class SuccessSection extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         SizedBox(
-            height: 100,
-            width: 100,
-            child: Image.asset("assets/images/success_icon.png")),
+          height: 100,
+          width: 100,
+          child: Image.asset("assets/images/success_icon.png")),
         const Text("Запись успешна добавлена"),
         FilledButton(
-            onPressed: onPress,
-            child: const Text("Перейти к моим записи"))
+          onPressed: onPress,
+          child: const Text("Перейти к моим записи")
+        )
       ],
     );
   }

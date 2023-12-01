@@ -1,16 +1,20 @@
-# hospital_app
+# Hospital Flutter App
 
-A new Flutter project.
+##### Разработчик: Алексеевич Никита
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Экраны
+<div>
+<img src="readme_assets\doctors.png" alt="screen" width="200"/>&nbsp;&nbsp;&nbsp;
+<img src="readme_assets\sel_serv.png" alt="screen" width="200"/>&nbsp;&nbsp;&nbsp;
+<img src="readme_assets\date.png" alt="screen" width="200"/>
+</div>
+<div>
+<img src="readme_assets\ser.png" alt="screen" width="200"/>&nbsp;&nbsp;&nbsp;
+<img src="readme_assets\records.png" alt="screen" width="200"/>&nbsp;&nbsp;&nbsp;
+<img src="readme_assets\record.png" alt="screen" width="200"/>
+</div>
+<div>
+<img src="readme_assets\splash.png" alt="screen" width="200"/>&nbsp;&nbsp;&nbsp;
+<img src="readme_assets\suc.png" alt="screen" width="200"/>&nbsp;&nbsp;&nbsp;
+<img src="readme_assets\error.png" alt="screen" width="200"/>
+</div>

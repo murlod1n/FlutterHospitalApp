@@ -16,17 +16,16 @@ class SelectDoctorSection extends StatelessWidget {
     return BlocBuilder<DoctorBloc, DoctorState>(
       builder: (BuildContext context, DoctorState state) {
         return state.status.isSuccess
-            ? _doctorList(state.doctorList)
-            : Expanded(
-              child: state.status.isLoading
-                  ? LoadingIndicatorSection()
-                  : state.status.isError
-                      ? ErrorSection(
-                          onPress: () =>
-                              context.read<DoctorBloc>().add(GetDoctorList()),
-                          error: state.error)
-                      : const SizedBox(),
-            );
+          ? _doctorList(state.doctorList)
+          : Expanded(
+            child: state.status.isLoading
+              ? LoadingIndicatorSection()
+              : state.status.isError
+                ? ErrorSection(
+                  onPress: () => context.read<DoctorBloc>().add(GetDoctorList()),
+                  error: state.error
+                ) : const SizedBox(),
+          );
       },
     );
   }
@@ -43,35 +42,32 @@ class SelectDoctorSection extends StatelessWidget {
                   child: SingleChildScrollView(
                     child: Column(
                       children: <Widget>[
-                        Container(
-                            padding: const EdgeInsets.only(
-                                left: 22, right: 22, top: 30, bottom: 20),
-                            child: Row(
-                              children: <Widget>[
-                                Text("Выберите лечащего врача",
-                                    style:
-                                        Theme.of(context).textTheme.titleSmall),
-                              ],
-                            )),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 22, right: 22, top: 30, bottom: 20),
+                          child: Row(
+                            children: <Widget>[
+                              Text("Выберите лечащего врача", style: Theme.of(context).textTheme.titleSmall),
+                            ],
+                          )
+                        ),
                         ListView.builder(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 22.0),
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: doctorList.length,
-                            shrinkWrap: true,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Container(
-                                  padding: const EdgeInsets.only(bottom: 12),
-                                  child: DoctorCard(
-                                    doctor: doctorList[index],
-                                    selectDoctor: () => context
-                                        .read<HomeBloc>()
-                                        .add(SelectDoctor(
-                                            doctor: doctorList[index])),
-                                    isSelected:
-                                        doctorList[index] == state.doctor,
-                                  ));
-                            }),
+                          padding: const EdgeInsets.symmetric(horizontal: 22.0),
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: doctorList.length,
+                          shrinkWrap: true,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 12),
+                              child: DoctorCard(
+                                doctor: doctorList[index],
+                                selectDoctor: () => context.read<HomeBloc>().add(
+                                  SelectDoctor(doctor: doctorList[index])
+                                ),
+                                isSelected: doctorList[index] == state.doctor,
+                              )
+                            );
+                          }
+                        ),
                       ],
                     ),
                   ),
@@ -79,7 +75,7 @@ class SelectDoctorSection extends StatelessWidget {
               ],
             ),
             Positioned(
-              bottom: 30,
+              bottom: 60,
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 22),
                 child: Row(
@@ -88,24 +84,23 @@ class SelectDoctorSection extends StatelessWidget {
                       height: 60,
                       width: 60,
                       child: OutlinedButton(
-                          style: OutlinedButton.styleFrom(
-                            padding: EdgeInsets.zero,
-                            side: const BorderSide(
-                                color: Color(0xFF7D8186)),
-                          ),
-                          onPressed: () => {},
-                          child: const Icon(Icons.arrow_back,
-                              size: 30, color: Color(0xFF7D8186))),
+                        style: OutlinedButton.styleFrom(
+                          padding: EdgeInsets.zero,
+                          side: const BorderSide(
+                          color: Color(0xFF7D8186)),
+                        ),
+                        onPressed:(){},
+                        child: const Icon(Icons.arrow_back, size: 30, color: Color(0xFF7D8186))
+                      ),
                     ),
                     const SizedBox(width: 14),
                     SizedBox(
                       height: 60,
                       width: MediaQuery.of(context).size.width - 118,
                       child: OutlinedButton(
-                          onPressed: () => context
-                              .read<HomeBloc>()
-                              .add(StepToSelectService(step: 1)),
-                          child: const Text("Продолжить")),
+                        onPressed: () => context.read<HomeBloc>().add(StepToSelectService(step: 1)),
+                        child: const Text("Продолжить")
+                      ),
                     ),
                   ],
                 ),

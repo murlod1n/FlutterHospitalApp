@@ -1,14 +1,14 @@
-import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 
-import '../../../../shared/presentation/model/doctor_ui.dart';
+import "../../../../shared/presentation/model/doctor_ui.dart";
 
 class DoctorCard extends StatelessWidget {
-  const DoctorCard(
-      {required this.doctor,
-      required this.selectDoctor,
-      required this.isSelected,
-      super.key});
+  const DoctorCard({
+    required this.doctor,
+    required this.selectDoctor,
+    required this.isSelected,
+    super.key
+  });
 
   final DoctorUI doctor;
   final bool isSelected;
@@ -22,7 +22,10 @@ class DoctorCard extends StatelessWidget {
         height: 80,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: isSelected ? Theme.of(context).primaryColor : Colors.transparent),
+          border: Border.all(
+            color: isSelected
+              ? Theme.of(context).primaryColor
+              : Colors.transparent),
           boxShadow: const <BoxShadow>[
             BoxShadow(
               color: Color(0x63D6DBE1),
@@ -31,18 +34,19 @@ class DoctorCard extends StatelessWidget {
           ],
           color: Colors.white,
         ),
-        child: Container(
+        child: Padding(
           padding: const EdgeInsets.all(10),
           child: Row(
             children: [
               SizedBox(
-                  width: 50,
-                  height: 50,
-                  child: CircleAvatar(
-                    backgroundColor: Colors.white,
-                    radius: 25,
-                    backgroundImage: NetworkImage(doctor.img),
-                  )),
+                width: 50,
+                height: 50,
+                child: CircleAvatar(
+                  backgroundColor: Colors.white,
+                  radius: 25,
+                  backgroundImage: NetworkImage(doctor.img),
+                )
+              ),
               const SizedBox(width: 10),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,

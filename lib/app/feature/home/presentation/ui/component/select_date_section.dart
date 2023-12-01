@@ -19,9 +19,6 @@ class _SelectDateSectionState extends State<SelectDateSection> {
   String selectedTime = "";
   int currentDay = DateTime.now().day - 1;
 
-
-
-
   final List<String> times = [
     "10:00",
     "11:00",
@@ -53,154 +50,133 @@ class _SelectDateSectionState extends State<SelectDateSection> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeBloc, HomeState>(
-        builder: (BuildContext context, HomeState state) {
+    return BlocBuilder<HomeBloc, HomeState>
+      (builder: (BuildContext context, HomeState state) {
       return Expanded(
         child: Stack(children: <Widget>[
-          Column(children: <Widget>[
-            Container(
-                padding: const EdgeInsets.only(left: 22, right: 22, top: 30),
-                child: Row(
-                  children: [
-                    Text("Выберите дату приема",
-                        style: Theme.of(context).textTheme.titleSmall),
-                  ],
-                )),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 16),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: const Color(0xFFE8E8E8),
-                ),
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8, horizontal: 14),
-                width: MediaQuery.of(context).size.width,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 25,
-                      width: 26,
-                      child: OutlinedButton(
-                          style: OutlinedButton.styleFrom(
-                            padding: EdgeInsets.zero,
-                            side: const BorderSide(
-                                color: Color(0xFF7D8186)),
-                          ),
-                          onPressed: () => setState(() {
-                                if (currentMonth == 1) {
-                                  currentMonth = 12;
-                                } else {
-                                  currentMonth--;
-                                }
-                                getCurrentDate();
-                              }),
-                          child: SvgPicture.asset("assets/images/arrow_l.svg",
-                              width: 14, height: 14)),
+          Column(
+            children: <Widget>[
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(left: 22, right: 22, top: 30),
+                      child: Row(
+                        children: <Widget>[Text("Выберите дату приема", style: Theme.of(context).textTheme.titleSmall)],
+                      )
                     ),
-                    Text(
-                        DateFormat.yMMMM("ru")
-                            .format(DateTime(
-                                DateTime.now().year, currentMonth + 1, 0))
-                            .mmmmyDateFormat().capitalize(),
-                        style: Theme.of(context).textTheme.titleMedium),
-                    SizedBox(
-                      height: 25,
-                      width: 26,
-                      child: OutlinedButton(
-                          style: OutlinedButton.styleFrom(
-                            padding: EdgeInsets.zero,
-                            side: const BorderSide(
-                                color: Color(0xFF7D8186)),
-                          ),
-                          onPressed: () => setState(() {
-                                if (currentMonth == 12) {
-                                  currentMonth = 1;
-                                } else {
-                                  currentMonth++;
-                                }
-                                getCurrentDate();
-                              }),
-                          child: SvgPicture.asset("assets/images/arrow_r.svg",
-                              width: 14, height: 14)),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(
-                height: 75,
-                child: _dayList(
-                    daysOfMonth,
-                    (String day) =>
-                        context.read<HomeBloc>().add(SetDate(date: day)))),
-            Padding(
-              padding: const EdgeInsets.only(left: 22, right: 22, top: 26),
-              child: Row(
-                children: <Widget>[
-                  Text("Выберите время приема",
-                      style: Theme.of(context).textTheme.titleSmall),
-                ],
-              ),
-            ),
-            Expanded(
-              child: GridView.count(
-                physics: const ClampingScrollPhysics(),
-                padding: const EdgeInsets.only(
-                    left: 22, right: 22, top: 14, bottom: 120),
-                mainAxisSpacing: 8,
-                crossAxisSpacing: 8,
-                crossAxisCount: 4,
-                childAspectRatio: 1 / .5,
-                children: <Widget>[
-                  for (final String time in times)
-                    GestureDetector(
-                      onTap: () {
-                        Feedback.forTap(context);
-                        setState(() {
-                          selectedTime = time;
-                        });
-                        context.read<HomeBloc>().add(SetTime(time: time));
-
-                      },
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 16),
                       child: Container(
-                          decoration: ShapeDecoration(
-                            color: time == selectedTime
-                                ? Theme.of(context).primaryColor
-                                : Colors.white,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: const Color(0xFFE8E8E8),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 14),
+                        width: MediaQuery.of(context).size.width,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            SizedBox(
+                              height: 25,
+                              width: 26,
+                              child: OutlinedButton(
+                                style: OutlinedButton.styleFrom(
+                                  padding: EdgeInsets.zero,
+                                  side: const BorderSide(color: Color(0xFF7D8186))
+                                ),
+                                onPressed: () => setState(() {
+                                  (currentMonth == 1) ? currentMonth = 12  : currentMonth--;
+                                  getCurrentDate();
+                                }),
+                                child: SvgPicture.asset("assets/images/arrow_l.svg", width: 14, height: 14)
+                              ),
                             ),
-                            shadows: const <BoxShadow>[
-                              BoxShadow(
-                                color: Color(0x63D6DBE1),
-                                blurRadius: 40,
-                              )
-                            ],
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Text(time,
-                                  style: Theme.of(context)
+                            Text(DateFormat.yMMMM("ru")
+                              .format(DateTime(DateTime.now().year, currentMonth + 1, 0))
+                              .mmmmyDateFormat().capitalize(),
+                              style: Theme.of(context).textTheme.titleMedium
+                            ),
+                            SizedBox(
+                              height: 25,
+                              width: 26,
+                              child: OutlinedButton(
+                                style: OutlinedButton.styleFrom(
+                                  padding: EdgeInsets.zero,
+                                  side: const BorderSide(color: Color(0xFF7D8186))
+                                ),
+                                onPressed: () => setState(() {
+                                  currentMonth == 12 ? currentMonth = 1 : currentMonth++;
+                                  getCurrentDate();
+                                }),
+                                child: SvgPicture.asset("assets/images/arrow_r.svg", width: 14, height: 14)
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 75,
+                      child: _dayList(daysOfMonth, (String day) => context.read<HomeBloc>().add(SetDate(date: day)))
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 22, right: 22, top: 26),
+                      child: Row(
+                        children: <Widget>[
+                          Text("Выберите время приема",style: Theme.of(context).textTheme.titleSmall),
+                        ],
+                      ),
+                    ),
+                    GridView.count(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      padding: const EdgeInsets.only(left: 22, right: 22, top: 14, bottom: 120),
+                      mainAxisSpacing: 8,
+                      crossAxisSpacing: 8,
+                      crossAxisCount: 4,
+                      childAspectRatio: 1 / .5,
+                      children: <Widget>[
+                        for (final String time in times)
+                          GestureDetector(
+                            onTap: () {
+                              Feedback.forTap(context);
+                              setState(() {
+                                selectedTime = time;
+                              });
+                              context.read<HomeBloc>().add(SetTime(time: time));
+                            },
+                            child: Container(
+                              decoration: ShapeDecoration(
+                                color: time == selectedTime
+                                  ? Theme.of(context).primaryColor
+                                  : Colors.white,
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                shadows: const <BoxShadow>[BoxShadow(color: Color(0x63D6DBE1), blurRadius: 40)],
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text(time,
+                                    style: Theme.of(context)
                                       .textTheme
-                                      .labelLarge
-                                      ?.copyWith(
-                                          color: time == selectedTime
-                                              ? Colors.white
-                                              : Theme.of(context)
-                                                  .colorScheme
-                                                  .onBackground)),
-                            ],
-                          )),
-                    )
-                ],
+                                      .labelLarge?.copyWith(
+                                        color: time == selectedTime ? Colors.white : Theme.of(context).colorScheme.onBackground
+                                    )
+                                  ),
+                                ],
+                              )
+                            ),
+                          )
+                      ],
+                    ),
+                  ]),
+                ),
               ),
-            ),
-          ]),
+            ],
+          ),
           Positioned(
-            bottom: 30,
+            bottom: 60,
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 22),
               child: Row(
@@ -209,25 +185,21 @@ class _SelectDateSectionState extends State<SelectDateSection> {
                     height: 60,
                     width: 60,
                     child: OutlinedButton(
-                        style: OutlinedButton.styleFrom(
-                          padding: EdgeInsets.zero,
-                          side: const BorderSide(
-                              color: Color(0xFF7D8186)),
-                        ),
-                        onPressed: () => context
-                            .read<HomeBloc>()
-                            .add(StepToSelectService(step: 1)),
-                        child: const Icon(Icons.arrow_back,
-                            size: 30, color: Color(0xFF7D8186))),
+                      style: OutlinedButton.styleFrom(
+                      padding: EdgeInsets.zero,
+                      side: const BorderSide(color: Color(0xFF7D8186))),
+                      onPressed: () => context.read<HomeBloc>().add(StepToSelectService(step: 1)),
+                      child: const Icon(Icons.arrow_back, size: 30, color: Color(0xFF7D8186))
+                    ),
                   ),
                   const SizedBox(width: 14),
                   SizedBox(
                     height: 60,
                     width: MediaQuery.of(context).size.width - 118,
                     child: FilledButton(
-                        onPressed: () =>
-                            context.read<HomeBloc>().add(PostRecord()),
-                        child: const Text("Забронировать")),
+                      onPressed: () => context.read<HomeBloc>().add(PostRecord()),
+                      child: const Text("Забронировать")
+                    ),
                   ),
                 ],
               ),
@@ -238,26 +210,25 @@ class _SelectDateSectionState extends State<SelectDateSection> {
     });
   }
 
-  Widget _dayList(int monthLength, Function(String) setDate) {
+  Widget _dayList(int monthLength, Function setDate) {
     return Padding(
       padding: const EdgeInsets.only(left: 22),
       child: ListView.separated(
-          padding: const EdgeInsets.only(right: 22),
-          scrollDirection: Axis.horizontal,
-          itemCount: monthLength,
-          clipBehavior: Clip.none,
-          shrinkWrap: true,
-          separatorBuilder: (BuildContext context, int index) =>
-              const SizedBox(width: 10),
-          itemBuilder: (BuildContext context, int index) {
-            return _dayCard(index, setDate);
-          }),
+        padding: const EdgeInsets.only(right: 22),
+        scrollDirection: Axis.horizontal,
+        itemCount: monthLength,
+        clipBehavior: Clip.none,
+        shrinkWrap: true,
+        separatorBuilder: (BuildContext context, int index) => const SizedBox(width: 10),
+        itemBuilder: (BuildContext context, int index) {
+          return _dayCard(index, setDate);
+        }
+      ),
     );
   }
 
-  Widget _dayCard(int day, Function(String) setDate) {
+  Widget _dayCard(int day, Function setDate) {
     return GestureDetector(
-
       onTap: () {
         setState(() {
           Feedback.forTap(context);
@@ -268,46 +239,40 @@ class _SelectDateSectionState extends State<SelectDateSection> {
             SetDate(date: DateFormat("dd/MM/yyyy").format(DateTime(DateTime.now().year, currentMonth, day+1))));
       },
       child: Container(
-          width: 55,
-          height: 75,
-          decoration: ShapeDecoration(
-            color: day == currentDay
-                ? Theme.of(context).primaryColor
-                : Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            shadows: const <BoxShadow>[
-              BoxShadow(
-                color: Color(0x63D6DBE1),
-                blurRadius: 40,
+        width: 55,
+        height: 75,
+        decoration: ShapeDecoration(
+          color: day == currentDay
+            ? Theme.of(context).primaryColor
+            : Colors.white,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10),),
+          shadows: const <BoxShadow>[
+            BoxShadow(color: Color(0x63D6DBE1), blurRadius: 40,)
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              DateFormat.E("ru").format(DateTime(DateTime.now().year, currentMonth, day + 1)).toUpperCase(),
+              style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                fontSize: 12,
+                color: day == currentDay
+                  ? Colors.white
+                  : const Color(0xFFC3C7CC)
               )
-            ],
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                  DateFormat.E("ru")
-                      .format(
-                          DateTime(DateTime.now().year, currentMonth, day + 1))
-                      .toUpperCase(),
-                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                      fontSize: 12,
-                      color: day == currentDay
-                          ? Colors.white
-                          : const Color(0xFFC3C7CC))),
-              Text(
-                  DateFormat("dd.MM")
-                      .format(
-                          DateTime(DateTime.now().year, currentMonth, day + 1))
-                      ,
-                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                      color: day == currentDay
-                          ? Colors.white
-                          : Theme.of(context).colorScheme.onBackground))
-            ],
-          )),
+            ),
+            Text(
+              DateFormat("dd.MM").format(DateTime(DateTime.now().year, currentMonth, day + 1)),
+              style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                color: day == currentDay
+                  ? Colors.white
+                  : Theme.of(context).colorScheme.onBackground
+              )
+            )
+          ],
+        )
+      ),
     );
   }
 }

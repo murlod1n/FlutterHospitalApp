@@ -217,14 +217,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.6"
-  dart_internal:
-    dependency: transitive
-    description:
-      name: dart_internal
-      sha256: "689dccc3d5f62affd339534cca548dce12b3a6b32f0f10861569d3025efc0567"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.2.9"
   dart_style:
     dependency: transitive
     description:
@@ -318,14 +310,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.3"
-  flutter_riverpod:
-    dependency: "direct main"
-    description:
-      name: flutter_riverpod
-      sha256: da9591d1f8d5881628ccd5c25c40e74fc3eef50ba45e40c3905a06e1712412d5
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.9"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -472,14 +456,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.1"
-  logger:
-    dependency: "direct main"
-    description:
-      name: logger
-      sha256: "7ad7215c15420a102ec687bb320a7312afd449bac63bfb1c60d9787c27b9767f"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.4.0"
   logging:
     dependency: transitive
     description:
@@ -528,14 +504,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
-  observable:
-    dependency: "direct main"
-    description:
-      name: observable
-      sha256: "6be2c1236cd4130a0e752895b0d3dee6d438d4c0b6775b8fe5808cf981aa9a70"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.24.0"
   package_config:
     dependency: transitive
     description:
@@ -664,14 +632,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.3"
-  quiver:
-    dependency: transitive
-    description:
-      name: quiver
-      sha256: b1c1ac5ce6688d77f65f3375a9abb9319b3cb32486bdc7a1e0fdf004d7ba4e47
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.2.1"
   recase:
     dependency: transitive
     description:
@@ -680,14 +640,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.1.0"
-  riverpod:
-    dependency: transitive
-    description:
-      name: riverpod
-      sha256: "942999ee48b899f8a46a860f1e13cee36f2f77609eb54c5b7a669bb20d550b11"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.9"
   rxdart:
     dependency: "direct main"
     description:
@@ -773,14 +725,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.11.0"
-  state_notifier:
-    dependency: transitive
-    description:
-      name: state_notifier
-      sha256: b8677376aa54f2d7c58280d5a007f9e8774f1968d1fb1c096adcb4792fba29bb
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.0"
   stream_channel:
     dependency: transitive
     description:
@@ -897,10 +841,10 @@ packages:
     dependency: transitive
     description:
       name: win32
-      sha256: "7c99c0e1e2fa190b48d25c81ca5e42036d5cac81430ef249027d97b0935c553f"
+      sha256: b0f37db61ba2f2e9b7a78a1caece0052564d1bc70668156cf3a29d676fe4e574
       url: "https://pub.dev"
     source: hosted
-    version: "5.1.0"
+    version: "5.1.1"
   xdg_directories:
     dependency: transitive
     description:
@@ -926,5 +870,5 @@ packages:
     source: hosted
     version: "3.1.2"
 sdks:
-  dart: ">=3.1.5 <3.3.0"
+  dart: ">=3.1.5 <4.0.0"
   flutter: ">=3.13.0"
