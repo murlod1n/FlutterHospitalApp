@@ -19,6 +19,6 @@ class RecordRepositoryImpl implements RecordRepository {
 
   @override
   Future<void> insertRecord({required RecordEntity recordEntity}) {
-    return databaseDao.insertRecord(recordEntity);
+    return databaseDao.insertRecord(entry: recordEntity);
   }
 }

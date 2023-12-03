@@ -12,4 +12,9 @@ class RecordRepositoryImpl implements RecordRepository {
     return databaseDao.getAllRecords();
   }
 
+  @override
+  void deleteRecord({ required int id}) {
+    databaseDao.deleteRecord(id: id);
+  }
+
 }

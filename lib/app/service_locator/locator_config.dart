@@ -13,6 +13,7 @@ import "../feature/home/domain/usecase/insert_record_usecase.dart";
 import "../feature/home/domain/usecase/post_record_usecase.dart";
 import "../feature/record/data/repository/record_repository_impl.dart" as record;
 import "../feature/record/domain/repository/record_repository.dart" as record;
+import "../feature/record/domain/usecase/delete_record_usecase.dart";
 import "../feature/record/domain/usecase/get_record_list_usecase.dart";
 import "../feature/shared/data/storage/dao/database_dao.dart";
 import "../feature/shared/data/storage/database/database.dart";
@@ -41,4 +42,5 @@ Future<void> initializeLocator() async {
   locator.registerSingleton<GetServiceListUseCase>(GetServiceListUseCase(serviceRepository: locator<ServiceRepository>()));
   locator.registerSingleton<InsertRecordUseCase>(InsertRecordUseCase(recordRepository: locator<home.RecordRepository>()));
   locator.registerSingleton<GetRecordListUseCase>(GetRecordListUseCase(recordRepository: locator<record.RecordRepository>()));
+  locator.registerSingleton<DeleteRecordUseCase>(DeleteRecordUseCase(recordRepository: locator<record.RecordRepository>()));
 }

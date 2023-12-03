@@ -16,7 +16,14 @@ class Database extends _$Database {
   @override
   int get schemaVersion => 2;
 
-
+  @override
+  MigrationStrategy get migration {
+    return MigrationStrategy(
+      beforeOpen: (details) async {
+        await customStatement('PRAGMA foreign_keys = ON');
+      },
+    );
+  }
 
 }
 

@@ -93,19 +93,45 @@ class RecordScreen extends StatelessWidget {
                                       ],
                                     ),
                                     width: MediaQuery.of(context).size.width - 104,
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: <Widget>[
-                                        Text(
-                                          state.recordSortedList[i]![index].doctor.name,
-                                          style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 12)
+                                        Column(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Text(
+                                              state.recordSortedList[i]![index].doctor.name,
+                                              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 12)
+                                            ),
+                                            Text(
+                                              state.recordSortedList[i]![index].doctor.dolzhnost,
+                                              style: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 11)
+                                            )
+                                          ]
                                         ),
-                                        Text(
-                                          state.recordSortedList[i]![index].doctor.dolzhnost,
-                                          style: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 11)
+                                        SizedBox(
+                                          height: 20,
+                                          width: 20,
+                                          child: PopupMenuButton(
+                                            padding: EdgeInsets.zero,
+                                            iconSize: 18,
+                                            icon: Icon(Icons.more_vert, color: Theme.of(context).colorScheme.onBackground),
+                                            color: Colors.white,
+                                            surfaceTintColor: Colors.white,
+                                            itemBuilder: (BuildContext context) {
+                                              return <PopupMenuItem>[
+                                                 PopupMenuItem(
+                                                   child: const Text("Удалить"),
+                                                   onTap: () => context.read<RecordBloc>().add(
+                                                     DeleteRecord(recordId: state.recordSortedList[i]![index].id)
+                                                   )
+                                                 )
+                                              ];
+                                            },
+                                          )
                                         )
-                                      ]
+                                      ],
                                     )  ,
                                   ),
                                 ],

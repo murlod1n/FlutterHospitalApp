@@ -1,4 +1,5 @@
 import "package:drift/drift.dart";
+import "package:hospital_app/app/feature/shared/data/storage/table/records.dart";
 
 class Doctors extends Table {
   IntColumn get id => integer().autoIncrement()();
@@ -9,4 +10,5 @@ class Doctors extends Table {
   TextColumn get img => text()();
   TextColumn get active => text()();
   TextColumn get del => text()();
+  IntColumn get recordId => integer().references(Records, #id, onDelete: KeyAction.cascade)();
 }

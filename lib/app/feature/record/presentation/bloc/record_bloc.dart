@@ -3,6 +3,7 @@ import "dart:core";
 import "package:bloc/bloc.dart";
 import "package:equatable/equatable.dart";
 import "../../../shared/domain/entity/record_entity.dart";
+import "../../domain/usecase/delete_record_usecase.dart";
 import "../../domain/usecase/get_record_list_usecase.dart";
 import "../mapper/record_ui_mapper.dart";
 import "../model/record_to_doctor_ui.dart";
@@ -11,11 +12,13 @@ part "record_event.dart";
 part "record_state.dart";
 
 class RecordBloc extends Bloc<RecordEvent, RecordState> {
-  RecordBloc({ required this.getRecordListUseCase }) : super(const RecordState()) {
+  RecordBloc({ required this.getRecordListUseCase, required this.deleteRecordUseCase }) : super(const RecordState()) {
     on<GetRecordList>(_getRecordList);
+    on<DeleteRecord>(_deleteRecord);
   }
 
     final GetRecordListUseCase getRecordListUseCase;
+    final DeleteRecordUseCase deleteRecordUseCase;
 
     Future<void> _getRecordList(GetRecordList event, Emitter<RecordState> emit) async {
       try {
@@ -32,6 +35,10 @@ class RecordBloc extends Bloc<RecordEvent, RecordState> {
       } catch(error) {
         emit(RecordState(status: RecordStatus.error, error: error.toString()));
       }
+    }
+
+    void _deleteRecord(DeleteRecord event, Emitter<RecordState> emit) {
+      deleteRecordUseCase(event.recordId);
     }
 
 }

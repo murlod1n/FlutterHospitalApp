@@ -17,3 +17,13 @@ class SetRecordList extends RecordEvent {
   List<Object?> get props => <Object?>[recordList];
 
 }
+
+class DeleteRecord extends RecordEvent {
+  DeleteRecord({required int this.recordId});
+
+  final int recordId;
+
+  @override
+  List<Object?> get props => <Object?>[recordId];
+
+}

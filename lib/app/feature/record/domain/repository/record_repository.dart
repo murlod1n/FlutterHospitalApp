@@ -5,4 +5,6 @@ abstract interface class RecordRepository {
 
   Stream<List<RecordEntity>> getRecordList();
 
+  void deleteRecord({required int id});
+
 }

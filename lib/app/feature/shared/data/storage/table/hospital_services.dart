@@ -1,4 +1,5 @@
 import "package:drift/drift.dart";
+import "records.dart";
 
 
 class HospitalServices extends Table {
@@ -8,4 +9,6 @@ class HospitalServices extends Table {
   TextColumn get active => text()();
   TextColumn get del => text()();
   TextColumn get price => text()();
+  IntColumn get recordId => integer().references(Records, #id, onDelete: KeyAction.cascade)();
+
 }

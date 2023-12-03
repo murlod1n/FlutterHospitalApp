@@ -11,6 +11,7 @@ import "app/feature/home/domain/usecase/post_record_usecase.dart";
 import "app/feature/home/presentation/bloc/doctor_bloc/doctor_bloc.dart";
 import "app/feature/home/presentation/bloc/home_bloc/home_bloc.dart";
 import "app/feature/home/presentation/bloc/service_bloc/service_bloc.dart";
+import "app/feature/record/domain/usecase/delete_record_usecase.dart";
 import "app/feature/record/domain/usecase/get_record_list_usecase.dart";
 import "app/feature/record/presentation/bloc/record_bloc.dart";
 import "app/routing/app_router.dart";
@@ -75,7 +76,8 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<RecordBloc>(
           create: (BuildContext context) => RecordBloc(
-            getRecordListUseCase: locator<GetRecordListUseCase>()
+            getRecordListUseCase: locator<GetRecordListUseCase>(),
+            deleteRecordUseCase: locator<DeleteRecordUseCase>()
           )..add(GetRecordList())
         ),
       ],
